@@ -56,6 +56,8 @@ window.onload= () =>{
     document.querySelector("div.DLc2vb").style.display="none"
     document.querySelector("div .Riuhhf").style.width = "-webkit-fill-available"
     document.querySelector("div .Jrbdv.tRImzd").style.display = "none"
+    document.querySelector('div.C2Jvlf').style.display="none"
+
     search=document.querySelector("span.RveJvd.snByac")
     // console.log(document.getElementsByClassName("U26fgb mUbCce fKz7Od ETeOHc pFf6gd")[0])
 
