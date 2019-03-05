@@ -26,6 +26,8 @@ chatButton.addEventListener('click', (e) => {
     intialWebViewLoad();
     webviewElement.setAttribute('src', 'https://chat.google.com/u/0/');
     webviewElement.setAttribute('id', 'chatWebView');
+    webviewElement.setAttribute('preload', path.join(__dirname, 'preloads', 'googleChat', 'googleChat.js'));
+    webviewElement.addEventListener("dom-ready", function(){ webviewElement.openDevTools();})
 })
 
 googleButton.addEventListener('click', (e) => {
@@ -48,7 +50,7 @@ webviewElement.addEventListener('did-finish-load', () => {
 })
 
 
-// Development
-webviewElement.addEventListener('dom-ready', () => {
-    webviewElement.openDevTools()
-})
+// // Development
+// webviewElement.addEventListener('dom-ready', () => {
+//     webviewElement.openDevTools()
+// })
