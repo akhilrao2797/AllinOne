@@ -4,35 +4,43 @@ const path = require('path');
 const ipc = require('electron').ipcRenderer;
 const Menu = electron.remote.Menu;
 const MenuItem = electron.remote.MenuItem;
-
-    
-
 function createContextMenu(win, href) {
     console.log("Function for context menu")
     const ctxMenu = new Menu()
     ctxMenu.append(new MenuItem(
         {
-            label: 'Share',
-            click: function () {
+            label: 'Share By Email',
+            click: function (event) {
+                //event.preventDefault();
                 //console.log(href)
                 console.log('ctx menu clicked')
                 console.log("Url is ", href)
-                    
-//             let windowGoogleChat = new BrowserWindow({ alwaysOnTop: true, width: 800, height: 600 });
-//             windowGoogleChat.webContents.on('did-finish-load', () => {
-//                 windowGoogleChat.webContents.send('message', 'This is a message from the renderer process to the second window.')
-//             });
-//             windowGoogleChat.webContents.openDevTools();
-//             windowGoogleChat.on('close', () => {
-//                 win = null;
-//             });
-//             windowGoogleChat.loadURL(path.join('file://', process.cwd(), 'GoogleChat.html'));
-//             windowGoogleChat.show();
-        
+                let windowGmail = new BrowserWindow(
+                    {
+                        alwaysOnTop: true,
+                        width: 800,
+                        height: 800,
+                    }
+                )
+               // win.on('close', function () { win = null })
+                let url = 'https://mail.google.com/mail/?view=cm&fs=1&to=&su=Google_Link&body=' + href
+                windowGmail.loadURL(url)
+            }
         }
-    }
     ))
-        win.webContents.on('context-menu', function (e, params) {
+    // ctxMenu.append(new MenuItem(
+    //     {
+    //         label: 'Share By Google Chat',
+    //         click: function () {
+    //             //console.log(href)
+    //             console.log('Sharing By Google Chat')
+    //             console.log("Url is ", href)
+    //         }
+    //     }
+    // ))
+
+
+    win.webContents.on('context-menu', function (e, params) {
         ctxMenu.popup(win, params.x, params.y)
     })
 
