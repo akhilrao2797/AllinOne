@@ -22,6 +22,7 @@ chatButton.addEventListener('click', (e) => {
 googleButton.addEventListener('click', (e) => {
     webviewElement.setAttribute('src','https://www.google.com');
     webviewElement.setAttribute('id','googleWebView');
+    webviewElement.setAttribute('preload',path.join(__dirname,'preloads','googleSearch','preloadGoogleSearch.js'));
 })
 
 gitlabButton.addEventListener('click', (e) => {
