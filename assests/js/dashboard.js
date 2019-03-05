@@ -27,6 +27,7 @@ googleButton.addEventListener('click', (e) => {
 gitlabButton.addEventListener('click', (e) => {
     webviewElement.setAttribute('src','https://git.hashedin.com');
     webviewElement.setAttribute('id','gitlabWebView');
+    webviewElement.setAttribute('preload',path.join(__dirname,'preloads','gitlab','allProjectsPreload.js'));
 })
 
 
