@@ -1,6 +1,10 @@
 const electron = require('electron');
 const BrowserWindow = electron.remote.BrowserWindow;
 let composeWindow;
+const {remote} = electron
+const {Menu, MenuItem} = remote
+const menu = new Menu()
+
 
 const composeWindowFunction = () => {
     document.querySelector('div.z0').innerHTML = "<button class='all-in-one-btn T-I J-J5-Ji T-I-KE L3'>Compose</button>"
@@ -24,6 +28,16 @@ const composeWindowFunction = () => {
 
 window.onload = () => {
     composeWindowFunction();
+
+    // // creating context menus
+    // menu.append(new MenuItem({ label: 'open new tab in gmail', click() { console.log('new tab will open in near future') } }))
+    // menu.append(new MenuItem({ type: 'separator' }))
+    // menu.append(new MenuItem({ label: 'item clicked', type: 'checkbox', checked: true }))
+
+    // document.addEventListener('contextmenu', (e) => {
+    //     e.preventDefault()
+    //     menu.popup({ window: remote.getCurrentWindow() })
+    // }, false)
 }
 
 

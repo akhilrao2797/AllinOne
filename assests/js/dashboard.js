@@ -1,6 +1,7 @@
 const path = require('path');
 const { app, BrowserWindow } = require('electron');
 
+
 const gmailButton = document.querySelector('#gmail-button');
 const chatButton = document.querySelector('#chat-button');
 const googleButton = document.querySelector('#google-button');

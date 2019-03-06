@@ -1,6 +1,8 @@
 const electron = require('electron')
 // const { globalShortcut } = require('electron')
-
+const {remote} = electron
+const {Menu, MenuItem} = remote
+const menu = new Menu()
 const path = require('path')
 // const ipc = electron.ipcRenderer
 // const remote = electron.remote
@@ -13,8 +15,8 @@ function CreateNewWindow(url){
     
     let win = new BrowserWindow(
         {   
-            frame:false,
-            alwaysOnTop:false,
+            
+            alwaysOnTop:true,
             width:500,
             height:600,
             maxHeight:700,
@@ -32,7 +34,15 @@ function CreateNewWindow(url){
     // currentWindow.addEventListener('dom-ready',()=>{
     //     currentWindow.webContents.openDevTools();
     // })
-    
+    win.webContents.on('before-input-event',()=>{
+        win.webContents.executeJavaScript(`
+        document.querySelector("div.U26fgb.mUbCce.fKz7Od.ETeOHc.pFf6gd")
+    .addEventListener("click",(e)=>{
+        window.close();
+        console.log("close button");
+    });
+        `)
+    })
     win.on('close', function(){win=null})
     win.loadURL(url)
     win.show(
@@ -48,23 +58,38 @@ function CreateNewWindow(url){
     // })
 }
 
+
+
 window.onload= () =>{
+
+//     contentlist = document.querySelectorAll("div.Eb3cg")
+// for ( item of contentlist) {
+//     item.addEventListener("click", function(event){
+//         console.log("clicked recieved")
+//         // console.log("item:",item)
+//         // console.log(item.offsetParent.getAttribute("data-group-id"))
+//     })   
+
     initialURL = document.URL
     // console.log("preload working")
     // // document.getElementsByClassName("U26fgb mUbCce fKz7Od ETeOHc pFf6gd")[0].style.display = "none"
-    document.querySelector("div.X9KLPc").style.width="100%"
-    document.querySelector("div.DLc2vb").style.display="none"
-    document.querySelector("div .Riuhhf").style.width = "-webkit-fill-available"
-    document.querySelector("div .Jrbdv.tRImzd").style.display = "none"
-    document.querySelector('div.C2Jvlf').style.display="none"
+    // document.querySelector("div.X9KLPc").style.width="100%"
+    // document.querySelector("div.DLc2vb").style.display="none"
+    // document.querySelector("div .Riuhhf").style.width = "-webkit-fill-available"
+    // document.querySelector("div .Jrbdv.tRImzd").style.display = "none"
+    // document.querySelector('div.C2Jvlf').style.display="none"
 
     search=document.querySelector("span.RveJvd.snByac")
+    
+    // console.log(contentlist)
     // console.log(document.getElementsByClassName("U26fgb mUbCce fKz7Od ETeOHc pFf6gd")[0])
 
         // console.log("event:",event)
         // console.log("eventsTarget:",event.target)
         // console.log("search:",search)
-        document.addEventListener("click",function(event){
+        
+        document.addEventListener("dblclick",function(event){
+            console.log("doubleclick recieved")
         if(search == event.target){
             console.log("reached the target")
             // tempWindow = new BrowserWindow({
@@ -98,6 +123,13 @@ window.onload= () =>{
     
     console.log("JJ")
 
+    // creating context menus
+    menu.append(new MenuItem({ label: 'open new tab in google chat', click() { console.log('new tab will open in near future') } }))
+    menu.append(new MenuItem({ type: 'separator' }))
+    menu.append(new MenuItem({ label: 'item clicked', type: 'checkbox', checked: true }))
 
-
+    document.addEventListener('contextmenu', (e) => {
+        e.preventDefault()
+        menu.popup({ window: remote.getCurrentWindow() })
+    }, false)
 }

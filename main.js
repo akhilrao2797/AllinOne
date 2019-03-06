@@ -1,11 +1,13 @@
 const { app, BrowserWindow } = require('electron');
 
+
 let win
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
       webPreferences:{
-          webviewTag:true
+          webviewTag:true,
+          nativeWindowOpen: true
       }
   })
   win.maximize();
@@ -18,3 +20,4 @@ function createWindow () {
 
 
 app.on('ready', createWindow)
+
