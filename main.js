@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 
 let win
 function createWindow () {
@@ -18,3 +18,13 @@ function createWindow () {
 
 
 app.on('ready', createWindow)
+let reply;
+ipcMain.on('message',function(event,arg){
+    console.log("This message is in MAIN")
+    console.log(arg);
+    reply = arg;
+    //googleChatWindow.webContents.send('sentMessage',arg)
+})
+ ipcMain.on('sendmessage',function(event){
+     event.returnValue = reply;
+ })
