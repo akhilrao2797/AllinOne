@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron');
+const {ipcMain} = require('electron');
 
 let win
 function createWindow () {
@@ -18,3 +19,17 @@ function createWindow () {
 
 
 app.on('ready', createWindow)
+let mainUrl;
+ipcMain.on('urlSend',function(event,arg){
+  mainUrl=arg;
+})
+ipcMain.on('urlRecieve',function(event){
+  event.returnValue=mainUrl;
+})
+let sshValue;
+ipcMain.on('sshSend',function(event,arg){
+  sshValue=arg;
+})
+ipcMain.on('sshValue',function(event){
+  event.returnValue=sshValue;
+})

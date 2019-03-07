@@ -4,12 +4,8 @@ const path = require("path");
 const ipc = electron.ipcRenderer;
 
 window.onload = () => {
-    // console.log("hii");
-    // ipc.send('url')
-    // ipc.on('urlsent',function(event, url){
-    //     console.log(url);
-    //     mainUrl=url;
-    // })
+    mainUrl=ipc.sendSync('urlRecieve');
+    console.log(mainUrl);
     document.querySelector('ul.list-unstyled.navbar-sub-nav').style.display="none";
     document.querySelector('ul.nav.navbar-nav').style.display="none";
     document.querySelector('div.nav-sidebar').style.width="0%";
@@ -24,7 +20,7 @@ window.onload = () => {
         win.loadURL('https://mail.google.com/mail/?view=cm&fs=1&su=Please review my merge request'+
         '&body='+
         document.querySelector('textarea.note-textarea.qa-issuable-form-description.js-gfm-input.js-autosize.markdown-area').value+
-        '%0APlease review my merge request%0A');
+        '%0APlease review my merge request%0A'+ mainUrl);
     })
     
 }

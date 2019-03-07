@@ -1,12 +1,14 @@
 const path = require('path');
+const remote = require('electron').remote;
 
 const gmailButton = document.querySelector('#gmail-button');
 const chatButton = document.querySelector('#chat-button');
 const googleButton = document.querySelector('#google-button');
 const gitlabButton = document.querySelector('#gitlab-button');
+const youtubeButton = document.querySelector('#youtube-button');
 const webviewContainer = document.querySelector('#webview-container');
 const webviewElement = document.querySelector('.webview');
-console.log(webviewElement)
+const buttton  = document.querySelector('#BUTTON');
 
 gmailButton.addEventListener('click', (e) => {
     webviewElement.setAttribute('src','https://mail.google.com/mail/u/0/');
@@ -30,9 +32,17 @@ gitlabButton.addEventListener('click', (e) => {
     webviewElement.setAttribute('preload',path.join(__dirname,'preloads','gitlab','allProjectsPreload.js'));
 })
 
-
+youtubeButton.addEventListener('click', (e) => {
+    webviewElement.setAttribute('src','https://www.youtube.com/');
+    webviewElement.setAttribute('id','youtubeWebView');
+    webviewElement.setAttribute('preload',path.join(__dirname,'preloads','youtube','youtubePreload.js'));
+})
+buttton.addEventListener('click',()=>{
+    var window = remote.getCurrentWindow();
+    window.hide(); 
+})
 // Development
-webviewElement.addEventListener('dom-ready', () => {
-    webviewElement.openDevTools()
-    })
+// webviewElement.addEventListener('dom-ready', () => {
+//     webviewElement.openDevTools()
+//     })
     

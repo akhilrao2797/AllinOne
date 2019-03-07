@@ -1,6 +1,8 @@
 const electron = require('electron');
 const BrowserWindow= electron.remote.BrowserWindow;
 const path = require("path");
+const ipcMain = electron.ipcMain;
+const ipcRenderer = electron.ipcRenderer;
 
 window.onload = () => {
     if(document.querySelector('a#oauth-login-google_oauth2') !== null){
@@ -39,4 +41,5 @@ window.onload = () => {
             win.loadURL(href);
         })
     }
+    
  };
