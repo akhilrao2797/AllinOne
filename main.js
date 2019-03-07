@@ -1,9 +1,11 @@
-const { app, BrowserWindow , ipcMain} = require('electron');
+const { app, BrowserWindow , ipcMain, Tray, Menu} = require('electron');
 const Store = require('./store.js');
 const path = require('path');
-
 let win
 let loginChild
+
+const iconPath = '/home/vatsala_mittal/all_in_one/Logo.png';
+let tray = null
 
 const store = new Store({
   // We'll call our data file 'user-preferences'
@@ -14,7 +16,50 @@ const store = new Store({
   }
 });
 
+function createTray(){
+  console.log("create tray function accessed")
+  tray = new Tray(iconPath)
+  console.log(iconPath)
+
+  let template = [
+    {
+      label: 'Compose Mail',
+      click: function(){
+        let windowGmail = new BrowserWindow(
+          {
+              alwaysOnTop: true,
+              width:  800,
+              height: 600,
+              webPreferences:{
+                preload: path.join(__dirname,'gmailCompose.js')
+              } 
+          }
+      )
+      windowGmail.loadURL('https://mail.google.com/mail/u/0/?view=cm&fs=1&tsu&body&bcc&tf=1')
+      windowGmail.show();
+
+      windowGmail.on('close', function () { windowGmail = null })
+
+      }
+    },
+    {
+      label: 'Open Chat',
+    }, {
+      label: 'Exit App',
+      click:function(){
+        app.exit();
+      }
+    }
+  ]
+
+  const contextMenu = Menu.buildFromTemplate(template)
+  tray.setContextMenu(contextMenu)
+  tray.setToolTip('Tray App')
+}
 function createWindow() {
+  console.log("Create Window is accessed")
+  createTray();
+ 
   let { width, height } = store.get('windowBounds');
 
   // Create the browser window.
@@ -30,6 +75,7 @@ function createWindow() {
   win.loadFile('dashboard.html');
 
   win.on('resize', () => {
+ 
     // The event doesn't pass us the window size, so we call the `getBounds` method which returns an object with
     // the height, width, and x and y coordinates.
     let { width, height } = win.getBounds();

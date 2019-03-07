@@ -31,7 +31,6 @@ function createContextMenu(win, href) {
                     console.log("readytoshow is working")
                 })
                 windowGmail.webContents.executeJavaScript(`
-                console.log(document.querySelector('div.Io'))
                 function dragWindow(){
                     document.querySelector('div.Io').style.webkitAppRegion = "drag";       
                 }
@@ -61,7 +60,8 @@ function createContextMenu(win, href) {
                         initialURL="https://chat.google.com/add/dm";
                         currentURL=document.URL;
                         if(currentURL !== initialURL)
-                        {    const {ipcRenderer} = require('electron');
+                        {    
+                            const {ipcRenderer} = require('electron');
                             const reply = ipcRenderer.sendSync("sendmessage")
                             function executeCode(){
                                 document.querySelector('div.oAzRtb.krjOGe').innerText=reply; 
