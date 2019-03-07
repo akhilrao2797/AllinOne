@@ -1,6 +1,6 @@
 const path = require('path');
-const { app, BrowserWindow } = require('electron');
-
+const { app, BrowserWindow, net } = require('electron');
+const remote = require('electron').remote;
 
 const gmailButton = document.querySelector('#gmail-button');
 const chatButton = document.querySelector('#chat-button');
@@ -9,6 +9,7 @@ const gitlabButton = document.querySelector('#gitlab-button');
 const webviewContainer = document.querySelector('#webview-container');
 const webviewElement = document.querySelector('.webview');
 const loading = document.querySelector('#loading');
+const logoutButton = document.querySelector('#logout');
 
 // Loading animation
 const intialWebViewLoad = () => {
@@ -43,15 +44,31 @@ gitlabButton.addEventListener('click', (e) => {
     webviewElement.setAttribute('id', 'gitlabWebView');
 })
 
+logoutButton.addEventListener('click', ()=>{
+    intialWebViewLoad();
+    fetch('https://www.google.com/accounts/Logout')
+    .then(()=>{
+        fetch('https://git.hashedin.com/users/sign_out')
+        .then(()=>{
+            remote.getCurrentWindow().hide();
+        })
+    })
+})
 
 webviewElement.addEventListener('did-finish-load', () => {
-    console.log(loading.style);
     loading.style.display='none'
     webviewElement.style.display = "inline-flex"
 })
 
 
-// // Development
-// webviewElement.addEventListener('dom-ready', () => {
-//     webviewElement.openDevTools()
-// })
+// Development
+webviewElement.addEventListener('dom-ready', () => {
+    webviewElement.openDevTools()
+})
+
+
+// window.onload = ()=>{
+//     console.log("hello form dash.js");
+    
+        
+// }

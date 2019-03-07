@@ -127,9 +127,11 @@ window.onload= () =>{
     menu.append(new MenuItem({ label: 'open new tab in google chat', click() { console.log('new tab will open in near future') } }))
     menu.append(new MenuItem({ type: 'separator' }))
     menu.append(new MenuItem({ label: 'item clicked', type: 'checkbox', checked: true }))
+    menu.append(new MenuItem({role:'copy'}))
+    menu.append(new MenuItem({role:'paste'}))
 
     document.addEventListener('contextmenu', (e) => {
         e.preventDefault()
-        menu.popup({ window: remote.getCurrentWindow() })
+        menu.popup()
     }, false)
 }
