@@ -9,7 +9,7 @@ const path = require('path')
 const MainWindow = electron.remote
 const BrowserWindow = electron.remote.BrowserWindow
 let win
-let tempWindow
+let selectedText
 
 function CreateNewWindow(url){
     
@@ -129,9 +129,53 @@ window.onload= () =>{
     menu.append(new MenuItem({ label: 'item clicked', type: 'checkbox', checked: true }))
     menu.append(new MenuItem({role:'copy'}))
     menu.append(new MenuItem({role:'paste'}))
-
+    menu.append(new MenuItem({
+        label: 'open compose box in gmail',
+        click() {
+            console.log("opening the composebox in near future");
+            selectedText = document.getSelection().toString();
+            popUpCompose(selectedText)
+        }
+    }));
+    
     document.addEventListener('contextmenu', (e) => {
         e.preventDefault()
         menu.popup()
     }, false)
+}
+
+function popUpCompose(selectedText){
+    regex=/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi
+    var found;
+    var indexArray=[];
+    var emailsArray = selectedText.match(regex);
+    if(emailsArray!=null && emailsArray.length){
+        //newText=selectedText.splice(found.index+emailsArray[emailsArray.length].length);
+        
+        //window.alert(found[emailsArray.length-1])
+        while((found=regex.exec(selectedText)) !==null){
+        // window.alert(found.index)
+        indexArray.push(found.index)
+        }
+    //    window.alert('indexArray:'+indexArray);
+       var strindex=indexArray[emailsArray.length-1]+emailsArray[emailsArray.length-1].length
+    //    window.alert(strindex)
+       var bodyText = selectedText.slice(strindex)
+        }
+        else{
+            // put the selected text in the body
+            bodyText = selectedText;
+            emailsArray=""
+        }
+
+    let gmailComposeWin = new BrowserWindow({
+        width:500,
+        height:600
+    })
+    let url = "https://mail.google.com/mail/?view=cm&to="+emailsArray+"&fs=1&body="+bodyText
+    gmailComposeWin.loadURL(url)
+    gmailComposeWin.show()
+    gmailComposeWin.on('close',()=>{
+        gmailComposeWin = null
+    })
 }
