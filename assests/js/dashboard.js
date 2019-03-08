@@ -6,6 +6,7 @@ const gmailButton = document.querySelector('#gmail-button');
 const chatButton = document.querySelector('#chat-button');
 const googleButton = document.querySelector('#google-button');
 const gitlabButton = document.querySelector('#gitlab-button');
+const youtubeButton = document.querySelector('#youtube-button');
 const webviewContainer = document.querySelector('#webview-container');
 const webviewElement = document.querySelector('.webview');
 const loading = document.querySelector('#loading');
@@ -16,6 +17,7 @@ const intialWebViewLoad = () => {
     loading.style.display='block'
     webviewElement.style.display = "none";
 }
+const buttton  = document.querySelector('#BUTTON');
 
 gmailButton.addEventListener('click', (e) => {
     intialWebViewLoad();
@@ -55,10 +57,21 @@ logoutButton.addEventListener('click', ()=>{
 
 webviewElement.addEventListener('did-finish-load', () => {
     loading.style.display='none'
-    webviewElement.style.display = "inline-flex"
+    //webviewElement.style.display = "inline-flex"
+    webviewElement.setAttribute('src','https://git.hashedin.com');
+    webviewElement.setAttribute('id','gitlabWebView');
+    webviewElement.setAttribute('preload',path.join(__dirname,'preloads','gitlab','allProjectsPreload.js'));
 })
 
-
+youtubeButton.addEventListener('click', (e) => {
+    webviewElement.setAttribute('src','https://www.youtube.com/');
+    webviewElement.setAttribute('id','youtubeWebView');
+    webviewElement.setAttribute('preload',path.join(__dirname,'preloads','youtube','youtubePreload.js'));
+})
+buttton.addEventListener('click',()=>{
+    var window = remote.getCurrentWindow();
+    window.hide(); 
+})
 // Development
 webviewElement.addEventListener('dom-ready', () => {
     webviewElement.openDevTools()

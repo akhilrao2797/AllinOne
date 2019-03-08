@@ -3,9 +3,8 @@ const Store = require('./store.js');
 const path = require('path');
 let win
 let loginChild
-
-const iconPath = '/home/vatsala_mittal/all_in_one/Logo.png';
 let tray = null
+const iconPath = '/home/vatsala_mittal/all_in_one/Logo.png';
 
 const store = new Store({
   // We'll call our data file 'user-preferences'
@@ -19,6 +18,7 @@ const store = new Store({
 function createTray(){
   console.log("create tray function accessed")
   tray = new Tray(iconPath)
+  tray.setHighlightMode('always')
   console.log(iconPath)
 
   let template = [
