@@ -1,4 +1,5 @@
 const electron = require('electron');
+const { remote } = electron;
 const BrowserWindow = electron.remote.BrowserWindow;
 let composeWindow;
 
@@ -9,11 +10,12 @@ const composeWindowFunction = () => {
     document.querySelector('div.aeQ').style.display = 'none';
     document.querySelector('span.J-Ke.n4.ah9').style.display = 'none';
     document.querySelector('div.gb_w.gb_Tc.gb_f.gb_xf').style.display = 'none'; // google apps done
-    document.querySelector('div.gb_uc.gb_Tc.gb_f.gb_vc.gb_xf').style.display = 'none' //notfication disable
-
+    // document.querySelector('div.gb_uc.gb_Tc.gb_f.gb_vc.gb_xf').style.display = 'none' //notfication disable
     document.querySelector('button.all-in-one-btn').addEventListener('click', () => {
         composeWindow = new BrowserWindow({
-            width: 500, height: 600, frame: false, webPreferences: {
+            parent: remote.getCurrentWindow(),
+            alwaysOnTop: true,
+            width: 500, height: 600, frame: true, webPreferences: {
                 nodeIntegration: false
             }
         })
