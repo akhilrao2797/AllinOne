@@ -126,5 +126,4 @@ function popUpCompose(selectedText) {
     gmailComposeWin.on('close', () => {
         gmailComposeWin = null
     })
-
 }
