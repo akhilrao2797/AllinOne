@@ -1,19 +1,13 @@
-<<<<<<< HEAD
-const { app, BrowserWindow , ipcMain, Tray, Menu} = require('electron');
-const Store = require('./store.js');
-const path = require('path');
-=======
-const { app, BrowserWindow, Menu, MenuItem } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem, Tray , ipcMain} = require('electron');
 const Store = require('./store.js');
 const path = require('path');
 const menu = new Menu()
 
 
->>>>>>> e68e949fc97760f91af1af8057e18d21dae1b569
 let win
 let loginChild
 let tray = null
-const iconPath = '/home/vatsala_mittal/all_in_one/Logo.png';
+const iconPath = path.join(__dirname,'Logo.png')
 
 const store = new Store({
   // We'll call our data file 'user-preferences'
@@ -28,7 +22,7 @@ function createTray(){
   console.log("create tray function accessed")
   tray = new Tray(iconPath)
   tray.setHighlightMode('always')
-  console.log(iconPath)
+  //console.log(iconPath)
 
   let template = [
     {
@@ -40,7 +34,7 @@ function createTray(){
               width:  800,
               height: 600,
               webPreferences:{
-                preload: path.join(__dirname,'gmailCompose.js')
+                preload: path.join(__dirname,'preloads','gmail','gmailCompose.js')
               } 
           }
       )
@@ -53,6 +47,23 @@ function createTray(){
     },
     {
       label: 'Open Chat',
+      click: function(){
+        let windowChat = new BrowserWindow(
+          {
+              //alwaysOnTop: true,
+              width:  800,
+              height: 600,
+              webPreferences:{
+                preload: path.join(__dirname,'preloads','googleChat','googleChat.js')
+              } 
+          }
+      )
+      windowChat.loadURL('https://chat.google.com/u/0/')
+      windowChat.show();
+
+      windowChat.on('close', function () { windowGmail = null })
+
+      }
     }, {
       label: 'Exit App',
       click:function(){
@@ -132,7 +143,6 @@ function createWindow() {
 }
 
 app.on('ready', createWindow)
-<<<<<<< HEAD
 let reply;
 ipcMain.on('message',function(event,arg){
     reply = arg;
@@ -140,18 +150,3 @@ ipcMain.on('message',function(event,arg){
  ipcMain.on('sendmessage',function(event){
      event.returnValue = reply;
  })
-=======
-
-// creating context menus
-
-
-  //  menu.append(new MenuItem({ label: 'open new tab in google chat', click() { console.log('new tab will open in near future') } }))
-  //  menu.append(new MenuItem({ type: 'separator' }))
-  //  menu.append(new MenuItem({ label: 'item clicked', type: 'checkbox', checked: true }))
-
-  // window.addEventListener('contextmenu', (e) => {
-  //   e.preventDefault()
-  //   menu.popup({ window: remote.getCurrentWindow() })
-  // }, false)
-   
->>>>>>> e68e949fc97760f91af1af8057e18d21dae1b569
