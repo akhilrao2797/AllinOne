@@ -60,7 +60,7 @@ window.onload = () => {
 
     console.log("JJ")
 
-    // // creating context menus
+    // creating context menus
     googleChatmenu.append(new MenuItem({ label: 'open new tab in google chat', click() { console.log('new tab will open in near future') } }))
     googleChatmenu.append(new MenuItem({ type: 'separator' }))
     googleChatmenu.append(new MenuItem({ label: 'item clicked', type: 'checkbox', checked: true }))
@@ -77,7 +77,7 @@ window.onload = () => {
     document.addEventListener('contextmenu', (e) => {
         e.preventDefault()
         googleChatmenu.popup()
-        // ipcRenderer.send('show-context-menu')
+        // ipcRenderer.send('show-context-menu',document)
     })
 
     

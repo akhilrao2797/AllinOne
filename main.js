@@ -4,7 +4,7 @@ const path = require('path');
 const menu = new Menu()
 
 let win
-let loginChild
+let loginChild,selectedText
 
 function createWindow() {
   // Create the browser window.
@@ -84,9 +84,11 @@ app.on('browser-window-created',(event,win)=>{
   })
 })
 
-ipcMain.on('show-context-menu',(event, newMenuItem)=>{
+ipcMain.on('show-context-menu',(event, newMenu)=>{
   const win = BrowserWindow.fromWebContents(event.sender)
   menu.popup(win)
 })
+
+
 
    
