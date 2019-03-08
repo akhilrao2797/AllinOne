@@ -17,21 +17,20 @@
             <nav id="sidenav">
                 <div id="gmail-button"><i class="fas fa-envelope fa-3x"></i></div>
                 <div id="chat-button"><i class="fas fa-comments fa-3x"></i></div>
-                <div id="google-button"><i class="fab fa-google fa-3x"></i></div>
                 <div id="gitlab-button"><i class="fab fa-gitlab fa-3x"></i></div>
-                <div><a href="https://www.google.com/accounts/Logout ">Google Logout</a></div>
-                <div><a href="https://git.hashedin.com/users/sign_out ">Git Logout</a></div>
+                <div id="logout"><i class="fas fa-sign-out-alt fa-3x"></i></div>
+                <!-- <div><a href="https://www.google.com/accounts/Logout ">Google Logout</a></div>
+                <div><a href="https://git.hashedin.com/users/sign_out ">Git Logout</a></div>  -->
             </nav>
         </header>
         <section id="webview-container" class="container-fluid">
             <div id="loading">
                 <img src="./assests/loading_animation.gif" alt="loader" class="mx-auto d-block">
             </div>
-            <webview class="webview" style="top:0; display:none !important; width: 100%; height: 99%;" allowpopups></webview>
             <!-- Web view goes here -->
+            <webview class="webview" style="top:0; display:inline-flex !important; width: 100%; height: 99.5%;" allowpopups src="https://mail.google.com/mail/u/0/"></webview>
         </section>
     </main>
-    <script src="./assests/js/dashboard.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="./assests/js/newDashboard.js"></script>
 </body>
 </html>
