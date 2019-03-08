@@ -40,7 +40,7 @@ webviewElement.setAttribute('preload', path.join(__dirname, 'preloads', 'gmail',
 // Create Child Browser window
 chatButton.addEventListener('click', (e) => {
     if (chatWindow == null) {
-        chatWindow = new BrowserWindow({webPreferences:{preload:path.join(__dirname,'preloads','googleChat','googleChat.js')}});
+        chatWindow = new BrowserWindow({webPreferences:{preload:path.join(__dirname,'preloads','googleChat','googleChat.js'), nodeIntegration: false}});
         chatWindow.loadURL('https://chat.google.com/u/0/');
     }
     if(chatWindow.isFocused()){
@@ -56,7 +56,7 @@ chatButton.addEventListener('click', (e) => {
 })
 gitlabButton.addEventListener('click', (e) => {
     if (gitlabWindow == null) {
-        gitlabWindow = new BrowserWindow({ webPreferences:{nodeIntegration:true}});
+        gitlabWindow = new BrowserWindow({webPreferences:{preload:path.join(__dirname,'preloads','gitlab','allProjectsPreload.js')}, nodeIntegration: false});
         gitlabWindow.loadURL('https://git.hashedin.com');
     }
     if(!gitlabWindow.isFocused()){
