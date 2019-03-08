@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, MenuItem } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem, ipcMain } = require('electron');
 const Store = require('./store.js');
 const path = require('path');
 const menu = new Menu()
@@ -81,14 +81,18 @@ function createWindow() {
 app.on('ready', createWindow)
 
 // creating context menus
+menu.append(new MenuItem({
+  label:'open in new window',
+  click(){
+    console.log("opening in a new window soon")
+  }
+}))
+
+app.on('browser-window-created',(event,win)=>{
+  win.webContents.on('context-menu',(e,params)=>{
+    menu.popup(win,params.x,params.y)
+  })
+})
 
 
-  //  menu.append(new MenuItem({ label: 'open new tab in google chat', click() { console.log('new tab will open in near future') } }))
-  //  menu.append(new MenuItem({ type: 'separator' }))
-  //  menu.append(new MenuItem({ label: 'item clicked', type: 'checkbox', checked: true }))
-
-  // window.addEventListener('contextmenu', (e) => {
-  //   e.preventDefault()
-  //   menu.popup({ window: remote.getCurrentWindow() })
-  // }, false)
    

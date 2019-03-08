@@ -132,7 +132,6 @@ window.onload= () =>{
     menu.append(new MenuItem({
         label: 'open compose box in gmail',
         click() {
-            console.log("opening the composebox in near future");
             selectedText = document.getSelection().toString();
             popUpCompose(selectedText)
         }
@@ -141,33 +140,40 @@ window.onload= () =>{
     document.addEventListener('contextmenu', (e) => {
         e.preventDefault()
         menu.popup()
-    }, false)
+    })
 }
 
 function popUpCompose(selectedText){
     regex=/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi
     var found;
     var indexArray=[];
+    var bodyText,strindex;
     var emailsArray = selectedText.match(regex);
-    var strindex=indexArray[emailsArray.length-1]+emailsArray[emailsArray.length-1].length
+    if (emailsArray!=null){
 
-    if(emailsArray!=null && emailsArray.length && strindex !== selectedText.length){
-        //newText=selectedText.splice(found.index+emailsArray[emailsArray.length].length);
-        
-        //window.alert(found[emailsArray.length-1])
-        while((found=regex.exec(selectedText)) !==null){
-        // window.alert(found.index)
-        indexArray.push(found.index)
-        }
-    //    window.alert('indexArray:'+indexArray);
-    //    window.alert(strindex)
-       var bodyText = selectedText.slice(strindex)
-        }
+        if(emailsArray!=null && emailsArray.length){
+            while((found=regex.exec(selectedText)) !==null){
+            indexArray.push(found.index)
+            }
+                strindex=indexArray[emailsArray.length-1]+emailsArray[emailsArray.length-1].length
+                // emails are in front and body comes after
+                if(strindex != selectedText.length){
+                    bodyText = selectedText.slice(strindex)
+                }
+                // body comes front so put everything in bodytext
+                else{
+                    bodyText = selectedText
+                }
+                
+            }
+    }
+    
         else 
         {
+            console.log('in else')
             // put the selected text in the body
             bodyText = selectedText;
-            emailsArray=""
+            emailsArray="";
         }
 
     let gmailComposeWin = new BrowserWindow({
