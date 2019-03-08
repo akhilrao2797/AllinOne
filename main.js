@@ -1,6 +1,8 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem } = require('electron');
 const Store = require('./store.js');
 const path = require('path');
+const menu = new Menu()
+
 
 let win
 let loginChild
@@ -21,13 +23,19 @@ function createWindow() {
   win = new BrowserWindow({
     webPreferences: {
       webviewTag: true,
-      nativeWindowOpen: true
+      nativeWindowOpen: true,
+      preload: path.join(__dirname, 'preloads', 'dashboard', 'dashboardPreload.js')
     },
     width, height,
     show: false
   })
   // and load the dashboard.html of the app.
   win.loadFile('dashboard.html');
+
+//   win.webContents.on('context-menu', (e) => {
+//     e.preventDefault()
+//     menu.popup()
+// }, false)
 
   win.on('resize', () => {
     // The event doesn't pass us the window size, so we call the `getBounds` method which returns an object with
@@ -71,3 +79,16 @@ function createWindow() {
 }
 
 app.on('ready', createWindow)
+
+// creating context menus
+
+
+  //  menu.append(new MenuItem({ label: 'open new tab in google chat', click() { console.log('new tab will open in near future') } }))
+  //  menu.append(new MenuItem({ type: 'separator' }))
+  //  menu.append(new MenuItem({ label: 'item clicked', type: 'checkbox', checked: true }))
+
+  // window.addEventListener('contextmenu', (e) => {
+  //   e.preventDefault()
+  //   menu.popup({ window: remote.getCurrentWindow() })
+  // }, false)
+   
