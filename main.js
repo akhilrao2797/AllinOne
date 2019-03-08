@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, MenuItem } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem, ipcMain } = require('electron');
 const Store = require('./store.js');
 const path = require('path');
 const menu = new Menu()
@@ -11,7 +11,6 @@ const store = new Store({
   // We'll call our data file 'user-preferences'
   configName: 'user-preferences',
   defaults: {
-    // 800x600 is the default size of our window
     windowBounds: { width: 1366, height: 713 }
   }
 });
@@ -31,11 +30,6 @@ function createWindow() {
   })
   // and load the dashboard.html of the app.
   win.loadFile('dashboard.html');
-
-//   win.webContents.on('context-menu', (e) => {
-//     e.preventDefault()
-//     menu.popup()
-// }, false)
 
   win.on('resize', () => {
     // The event doesn't pass us the window size, so we call the `getBounds` method which returns an object with
@@ -79,16 +73,17 @@ function createWindow() {
 }
 
 app.on('ready', createWindow)
-
-// creating context menus
-
-
-  //  menu.append(new MenuItem({ label: 'open new tab in google chat', click() { console.log('new tab will open in near future') } }))
-  //  menu.append(new MenuItem({ type: 'separator' }))
-  //  menu.append(new MenuItem({ label: 'item clicked', type: 'checkbox', checked: true }))
-
-  // window.addEventListener('contextmenu', (e) => {
-  //   e.preventDefault()
-  //   menu.popup({ window: remote.getCurrentWindow() })
-  // }, false)
-   
+let mainUrl;
+ipcMain.on('urlSend',function(event,arg){
+  mainUrl=arg;
+})
+ipcMain.on('urlRecieve',function(event){
+  event.returnValue=mainUrl;
+})
+let sshValue;
+ipcMain.on('sshSend',function(event,arg){
+  sshValue=arg;
+})
+ipcMain.on('sshValue',function(event){
+  event.returnValue=sshValue;
+})
