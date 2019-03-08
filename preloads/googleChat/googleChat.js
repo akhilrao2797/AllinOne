@@ -1,8 +1,12 @@
-const electron = require('electron');
-const { remote } = electron
-const { Menu, MenuItem } = remote
-const menu = new Menu()
+const electron = require('electron')
+// const { globalShortcut } = require('electron')
+const {remote} = electron
+const {Menu, MenuItem} = remote
+const googleChatmenu = new Menu()
 const path = require('path')
+const {ipcRenderer} = require('electron')
+// const ipc = electron.ipcRenderer
+// const remote = electron.remote
 const MainWindow = electron.remote
 const BrowserWindow = electron.remote.BrowserWindow
 let win
@@ -56,16 +60,15 @@ window.onload = () => {
 
     console.log("JJ")
 
-    // creating context menus
-    menu.append(new MenuItem({ label: 'open new tab in google chat', click() { console.log('new tab will open in near future') } }))
-    menu.append(new MenuItem({ type: 'separator' }))
-    menu.append(new MenuItem({ label: 'item clicked', type: 'checkbox', checked: true }))
-    menu.append(new MenuItem({ role: 'copy' }))
-    menu.append(new MenuItem({ role: 'paste' }))
-    menu.append(new MenuItem({
+    // // creating context menus
+    googleChatmenu.append(new MenuItem({ label: 'open new tab in google chat', click() { console.log('new tab will open in near future') } }))
+    googleChatmenu.append(new MenuItem({ type: 'separator' }))
+    googleChatmenu.append(new MenuItem({ label: 'item clicked', type: 'checkbox', checked: true }))
+    googleChatmenu.append(new MenuItem({role:'copy'}))
+    googleChatmenu.append(new MenuItem({role:'paste'}))
+    googleChatmenu.append(new MenuItem({
         label: 'open compose box in gmail',
         click() {
-            console.log("opening the composebox in near future");
             selectedText = document.getSelection().toString();
             popUpCompose(selectedText)
         }
@@ -73,27 +76,45 @@ window.onload = () => {
 
     document.addEventListener('contextmenu', (e) => {
         e.preventDefault()
-        menu.popup()
-    }, false)
+        googleChatmenu.popup()
+        // ipcRenderer.send('show-context-menu')
+    })
+
+    
 }
 
 function popUpCompose(selectedText) {
     regex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi
     var found;
-    var indexArray = [];
+    var indexArray=[];
+    var bodyText,strindex;
     var emailsArray = selectedText.match(regex);
-    var strindex = indexArray[emailsArray.length - 1] + emailsArray[emailsArray.length - 1].length
+    if (emailsArray!=null){
 
-    if (emailsArray != null && emailsArray.length && strindex !== selectedText.length) {
-        while ((found = regex.exec(selectedText)) !== null) {
+        if(emailsArray!=null && emailsArray.length){
+            while((found=regex.exec(selectedText)) !==null){
             indexArray.push(found.index)
+            }
+                strindex=indexArray[emailsArray.length-1]+emailsArray[emailsArray.length-1].length
+                // emails are in front and body comes after
+                if(strindex != selectedText.length){
+                    bodyText = selectedText.slice(strindex)
+                }
+                // body comes front so put everything in bodytext
+                else{
+                    bodyText = selectedText
+                }
+                
+            }
         }
-        var bodyText = selectedText.slice(strindex)
-    }
-    else {
-        bodyText = selectedText;
-        emailsArray = ""
-    }
+    
+        else 
+        {
+            console.log('in else')
+            // put the selected text in the body
+            bodyText = selectedText;
+            emailsArray="";
+        }
 
     let gmailComposeWin = new BrowserWindow({
         width: 500,
@@ -105,4 +126,5 @@ function popUpCompose(selectedText) {
     gmailComposeWin.on('close', () => {
         gmailComposeWin = null
     })
+
 }

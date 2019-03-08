@@ -1,4 +1,5 @@
 const { app, BrowserWindow, Menu, MenuItem, ipcMain } = require('electron');
+const Store = require('./store.js');
 const path = require('path');
 const menu = new Menu()
 
@@ -66,3 +67,26 @@ ipcMain.on('sshSend',function(event,arg){
 ipcMain.on('sshValue',function(event){
   event.returnValue=sshValue;
 })
+// creating context menus
+menu.append(new MenuItem({
+  label:'open in new window',
+  click(){
+    console.log("opening in a new window soon")
+  }
+}))
+
+menu.append(new MenuItem({role:'copy'}))
+menu.append(new MenuItem({role:'paste'}))
+
+app.on('browser-window-created',(event,win)=>{
+  win.webContents.on('context-menu',(e,params)=>{
+    menu.popup(win,params.x,params.y)
+  })
+})
+
+ipcMain.on('show-context-menu',(event, newMenuItem)=>{
+  const win = BrowserWindow.fromWebContents(event.sender)
+  menu.popup(win)
+})
+
+   
