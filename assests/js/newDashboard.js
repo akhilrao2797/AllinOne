@@ -6,6 +6,8 @@ const gmailButton = document.querySelector('#gmail-button');
 const chatButton = document.querySelector('#chat-button');
 const googleButton = document.querySelector('#google-button');
 const gitlabButton = document.querySelector('#gitlab-button');
+const slackButton = document.querySelector('#slack-button');
+
 const webviewContainer = document.querySelector('#webview-container');
 const webviewElement = document.querySelector('.webview');
 const loading = document.querySelector('#loading');
@@ -54,10 +56,25 @@ chatButton.addEventListener('click', (e) => {
         chatWindow = null;
     })
 })
+// creating child element
 gitlabButton.addEventListener('click', (e) => {
     if (gitlabWindow == null) {
         gitlabWindow = new BrowserWindow({webPreferences:{preload:path.join(__dirname,'preloads','gitlab','allProjectsPreload.js')}, nodeIntegration: false});
         gitlabWindow.loadURL('https://git.hashedin.com');
+    }
+    if(!gitlabWindow.isFocused()){
+        gitlabWindow.focus();
+    }
+    gitlabWindow.on('closed', () => {
+        gitlabWindow = null;
+    })
+})
+
+// creating child element
+slackButton.addEventListener('click', (e) => {
+    if (gitlabWindow == null) {
+        gitlabWindow = new BrowserWindow({webPreferences:{preload:path.join(__dirname,'preloads','slack','slackpreload.js')}, nodeIntegration: false});
+        gitlabWindow.loadURL('https://slack.com/signin');
     }
     if(!gitlabWindow.isFocused()){
         gitlabWindow.focus();

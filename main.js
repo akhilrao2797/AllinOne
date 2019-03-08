@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 const { app, BrowserWindow, Menu, MenuItem, Tray , ipcMain} = require('electron');
-=======
-const { app, BrowserWindow, Menu, MenuItem, ipcMain } = require('electron');
->>>>>>> 9f8affc1240f0e5d4cc4715724daa56794a2b4d0
 const Store = require('./store.js');
 const path = require('path');
 const menu = new Menu()
@@ -141,15 +137,6 @@ function createWindow() {
 }
 
 app.on('ready', createWindow)
-<<<<<<< HEAD
-let reply;
-ipcMain.on('message',function(event,arg){
-    reply = arg;
-})
- ipcMain.on('sendmessage',function(event){
-     event.returnValue = reply;
- })
-=======
 let mainUrl;
 ipcMain.on('urlSend',function(event,arg){
   mainUrl=arg;
@@ -164,4 +151,3 @@ ipcMain.on('sshSend',function(event,arg){
 ipcMain.on('sshValue',function(event){
   event.returnValue=sshValue;
 })
->>>>>>> 9f8affc1240f0e5d4cc4715724daa56794a2b4d0
