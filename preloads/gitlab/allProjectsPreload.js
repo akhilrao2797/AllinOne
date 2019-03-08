@@ -18,18 +18,21 @@ window.onload = () => {
     mainUrl=document.URL;
     document.querySelector('ul.list-unstyled.navbar-sub-nav').style.display="none";
     document.querySelector('ul.nav.navbar-nav').style.display="none";
-    let editAndNewMergeRequest = document.querySelector('a.btn.btn-success');
-    editAndNewMergeRequest.addEventListener("click",(e)=>{
-        e.preventDefault();
-        console.log(editAndNewMergeRequest);
-        let href = editAndNewMergeRequest.href;
-        let win = new BrowserWindow({
-            webPreferences:{
-                preload:path.join(__dirname,'newMergeRequestPreload.js')
-            }
-        });
-        win.loadURL(href);
-    })
+    if(document.querySelector('a.btn.btn-success'))
+    {
+        let editAndNewMergeRequest = document.querySelector('a.btn.btn-success');
+        editAndNewMergeRequest.addEventListener("click",(e)=>{
+            e.preventDefault();
+            console.log(editAndNewMergeRequest);
+            let href = editAndNewMergeRequest.href;
+            let win = new BrowserWindow({
+                webPreferences:{
+                    preload:path.join(__dirname,'newMergeRequestPreload.js')
+                }
+            });
+            win.loadURL(href);
+        })
+    }
 
     for(let project of projects)
     {
