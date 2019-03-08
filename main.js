@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const { app, BrowserWindow, Menu, MenuItem, Tray , ipcMain} = require('electron');
+=======
+const { app, BrowserWindow, Menu, MenuItem, ipcMain } = require('electron');
+>>>>>>> 9f8affc1240f0e5d4cc4715724daa56794a2b4d0
 const Store = require('./store.js');
 const path = require('path');
 const menu = new Menu()
@@ -13,7 +17,6 @@ const store = new Store({
   // We'll call our data file 'user-preferences'
   configName: 'user-preferences',
   defaults: {
-    // 800x600 is the default size of our window
     windowBounds: { width: 1366, height: 713 }
   }
 });
@@ -95,11 +98,6 @@ function createWindow() {
   // and load the dashboard.html of the app.
   win.loadFile('dashboard.html');
 
-//   win.webContents.on('context-menu', (e) => {
-//     e.preventDefault()
-//     menu.popup()
-// }, false)
-
   win.on('resize', () => {
  
     // The event doesn't pass us the window size, so we call the `getBounds` method which returns an object with
@@ -143,6 +141,7 @@ function createWindow() {
 }
 
 app.on('ready', createWindow)
+<<<<<<< HEAD
 let reply;
 ipcMain.on('message',function(event,arg){
     reply = arg;
@@ -150,3 +149,19 @@ ipcMain.on('message',function(event,arg){
  ipcMain.on('sendmessage',function(event){
      event.returnValue = reply;
  })
+=======
+let mainUrl;
+ipcMain.on('urlSend',function(event,arg){
+  mainUrl=arg;
+})
+ipcMain.on('urlRecieve',function(event){
+  event.returnValue=mainUrl;
+})
+let sshValue;
+ipcMain.on('sshSend',function(event,arg){
+  sshValue=arg;
+})
+ipcMain.on('sshValue',function(event){
+  event.returnValue=sshValue;
+})
+>>>>>>> 9f8affc1240f0e5d4cc4715724daa56794a2b4d0
