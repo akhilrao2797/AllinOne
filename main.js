@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 const { app, BrowserWindow , ipcMain, Tray, Menu} = require('electron');
 const Store = require('./store.js');
 const path = require('path');
+=======
+const { app, BrowserWindow, Menu, MenuItem } = require('electron');
+const Store = require('./store.js');
+const path = require('path');
+const menu = new Menu()
+
+
+>>>>>>> e68e949fc97760f91af1af8057e18d21dae1b569
 let win
 let loginChild
 let tray = null
@@ -66,13 +75,19 @@ function createWindow() {
   win = new BrowserWindow({
     webPreferences: {
       webviewTag: true,
-      nativeWindowOpen: true
+      nativeWindowOpen: true,
+      preload: path.join(__dirname, 'preloads', 'dashboard', 'dashboardPreload.js')
     },
     width, height,
     show: false
   })
   // and load the dashboard.html of the app.
   win.loadFile('dashboard.html');
+
+//   win.webContents.on('context-menu', (e) => {
+//     e.preventDefault()
+//     menu.popup()
+// }, false)
 
   win.on('resize', () => {
  
@@ -117,6 +132,7 @@ function createWindow() {
 }
 
 app.on('ready', createWindow)
+<<<<<<< HEAD
 let reply;
 ipcMain.on('message',function(event,arg){
     reply = arg;
@@ -124,3 +140,18 @@ ipcMain.on('message',function(event,arg){
  ipcMain.on('sendmessage',function(event){
      event.returnValue = reply;
  })
+=======
+
+// creating context menus
+
+
+  //  menu.append(new MenuItem({ label: 'open new tab in google chat', click() { console.log('new tab will open in near future') } }))
+  //  menu.append(new MenuItem({ type: 'separator' }))
+  //  menu.append(new MenuItem({ label: 'item clicked', type: 'checkbox', checked: true }))
+
+  // window.addEventListener('contextmenu', (e) => {
+  //   e.preventDefault()
+  //   menu.popup({ window: remote.getCurrentWindow() })
+  // }, false)
+   
+>>>>>>> e68e949fc97760f91af1af8057e18d21dae1b569

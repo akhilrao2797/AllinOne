@@ -2,7 +2,6 @@ const electron = require('electron');
 const { remote } = electron;
 const BrowserWindow = electron.remote.BrowserWindow;
 let composeWindow;
-
 const composeWindowFunction = () => {
     document.querySelector('div.z0').innerHTML = "<button class='all-in-one-btn T-I J-J5-Ji T-I-KE L3'>Compose</button>"
     // Disable hangout

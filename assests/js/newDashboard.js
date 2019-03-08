@@ -40,7 +40,7 @@ webviewElement.setAttribute('preload', path.join(__dirname, 'preloads', 'gmail',
 // Create Child Browser window
 chatButton.addEventListener('click', (e) => {
     if (chatWindow == null) {
-        chatWindow = new BrowserWindow({});
+        chatWindow = new BrowserWindow({webPreferences:{preload:path.join(__dirname,'preloads','googleChat','googleChat.js')}});
         chatWindow.loadURL('https://chat.google.com/u/0/');
     }
     if(chatWindow.isFocused()){
