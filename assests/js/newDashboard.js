@@ -1,4 +1,5 @@
 const path = require('path');
+const {remote} = require('electron')
 const { BrowserWindow } = require('electron').remote
 
 
@@ -40,13 +41,13 @@ webviewElement.setAttribute('preload', path.join(__dirname, 'preloads', 'gmail',
 // Create Child Browser window
 chatButton.addEventListener('click', (e) => {
     if (chatWindow == null) {
-        chatWindow = new BrowserWindow({webPreferences:{preload:path.join(__dirname,'preloads','googleChat','googleChat.js'), nodeIntegration: false}});
+        chatWindow = new BrowserWindow({ webPreferences: { preload: path.join(__dirname, 'preloads', 'googleChat', 'googleChat.js'), nodeIntegration: false } });
         chatWindow.loadURL('https://chat.google.com/u/0/');
     }
-    if(chatWindow.isFocused()){
+    if (chatWindow.isFocused()) {
         console.log("IS FOCUSED")
     }
-    else{
+    else {
         console.log("MAKING FOCUS")
         chatWindow.focus();
     }
@@ -56,13 +57,23 @@ chatButton.addEventListener('click', (e) => {
 })
 gitlabButton.addEventListener('click', (e) => {
     if (gitlabWindow == null) {
-        gitlabWindow = new BrowserWindow({webPreferences:{preload:path.join(__dirname,'preloads','gitlab','allProjectsPreload.js')}, nodeIntegration: false});
+        gitlabWindow = new BrowserWindow({ webPreferences: { preload: path.join(__dirname, 'preloads', 'gitlab', 'allProjectsPreload.js') }, nodeIntegration: false });
         gitlabWindow.loadURL('https://git.hashedin.com');
     }
-    if(!gitlabWindow.isFocused()){
+    if (!gitlabWindow.isFocused()) {
         gitlabWindow.focus();
     }
     gitlabWindow.on('closed', () => {
         gitlabWindow = null;
     })
+})
+logoutButton.addEventListener('click', () => {
+    remote.getCurrentWindow().hide();
+    fetch('https://www.google.com/accounts/Logout')
+        .then(() => {
+            fetch('https://git.hashedin.com/users/sign_out')
+                .then(() => {
+                    remote.getCurrentWindow().hide();
+                })
+        })
 })

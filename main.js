@@ -1,43 +1,19 @@
 const { app, BrowserWindow, Menu, MenuItem, ipcMain } = require('electron');
-const Store = require('./store.js');
 const path = require('path');
 const menu = new Menu()
-
 
 let win
 let loginChild
 
-const store = new Store({
-  // We'll call our data file 'user-preferences'
-  configName: 'user-preferences',
-  defaults: {
-    windowBounds: { width: 1366, height: 713 }
-  }
-});
-
 function createWindow() {
-  let { width, height } = store.get('windowBounds');
-
   // Create the browser window.
   win = new BrowserWindow({
+    show: false,
     webPreferences: {
       webviewTag: true,
       nativeWindowOpen: true,
-      preload: path.join(__dirname, 'preloads', 'dashboard', 'dashboardPreload.js')
-    },
-    width, height,
-    show: false
+    }
   })
-  // and load the dashboard.html of the app.
-  win.loadFile('dashboard.html');
-
-  win.on('resize', () => {
-    // The event doesn't pass us the window size, so we call the `getBounds` method which returns an object with
-    // the height, width, and x and y coordinates.
-    let { width, height } = win.getBounds();
-    // Now that we have them, save them using the `set` method.
-    store.set('windowBounds', { width, height });
-  });
 
   loginChild = new BrowserWindow(
     {
@@ -52,6 +28,8 @@ function createWindow() {
   loginChild.on('page-title-updated', () => {
     if (loginChild.webContents.getURL().includes('https://myaccount.google.com')) {
       loginChild.hide();
+      win.loadFile('dashboard.html');
+      win.maximize();
       win.show();
     }
   })
@@ -73,6 +51,7 @@ function createWindow() {
 }
 
 app.on('ready', createWindow)
+
 let mainUrl;
 ipcMain.on('urlSend',function(event,arg){
   mainUrl=arg;
