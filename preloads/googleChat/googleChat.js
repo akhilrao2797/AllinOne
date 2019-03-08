@@ -149,7 +149,9 @@ function popUpCompose(selectedText){
     var found;
     var indexArray=[];
     var emailsArray = selectedText.match(regex);
-    if(emailsArray!=null && emailsArray.length){
+    var strindex=indexArray[emailsArray.length-1]+emailsArray[emailsArray.length-1].length
+
+    if(emailsArray!=null && emailsArray.length && strindex !== selectedText.length){
         //newText=selectedText.splice(found.index+emailsArray[emailsArray.length].length);
         
         //window.alert(found[emailsArray.length-1])
@@ -158,11 +160,11 @@ function popUpCompose(selectedText){
         indexArray.push(found.index)
         }
     //    window.alert('indexArray:'+indexArray);
-       var strindex=indexArray[emailsArray.length-1]+emailsArray[emailsArray.length-1].length
     //    window.alert(strindex)
        var bodyText = selectedText.slice(strindex)
         }
-        else{
+        else 
+        {
             // put the selected text in the body
             bodyText = selectedText;
             emailsArray=""
