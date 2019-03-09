@@ -12,19 +12,22 @@ window.onload = () => {
     mainUrl=document.URL;
     document.querySelector('ul.list-unstyled.navbar-sub-nav').style.display="none";
     document.querySelector('ul.nav.navbar-nav').style.display="none";
-    let editAndNewMergeRequest = document.querySelector('a.btn.btn-success');
-    editAndNewMergeRequest.addEventListener("click",(e)=>{
-        console.log(window)
-        e.preventDefault();
-        console.log(editAndNewMergeRequest);
-        let href = editAndNewMergeRequest.href;
-        let newProjectWindow = new BrowserWindow({
-            webPreferences:{
-                preload:path.join(__dirname,'newMergeRequestPreload.js')
-            }
-        });
-        newProjectWindow.loadURL(href);
-    })
+    if(document.querySelector('a.btn.btn-success'))
+    {
+        let editAndNewMergeRequest = document.querySelector('a.btn.btn-success');
+        editAndNewMergeRequest.addEventListener("click",(e)=>{
+            e.preventDefault();
+            console.log(editAndNewMergeRequest);
+            let href = editAndNewMergeRequest.href;
+            let gmailWindow = new BrowserWindow({
+                webPreferences:{
+                    preload:path.join(__dirname,'newMergeRequestPreload.js')
+                }
+            });
+            // gmailWindow.setParentWindow(gmailWindow.getParentWindow())
+            gmailWindow.loadURL(href);
+        })
+    }
 
     for(let project of projects)
     {
@@ -32,16 +35,19 @@ window.onload = () => {
             e.preventDefault();
             let href =project.querySelector('a').href;
             console.log(href);
-            let win = new BrowserWindow({
+            let ProjectWindow = new BrowserWindow({
                 width:800,
                 height:700,
                 resizable: false,
-                // parent:window.parent,
                 webPreferences:{
                     preload:path.join(__dirname, 'projectPreload.js')
                 }
             });
-            win.loadURL(href);
+            // ProjectWindow.setParentWindow(ProjectWindow.getParentWindow())
+            ProjectWindow.loadURL(href);
+            ProjectWindow.on("close",()=>{
+                ProjectWindow=null;
+            })
         })
     }
     
