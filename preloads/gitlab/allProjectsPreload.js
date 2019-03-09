@@ -14,15 +14,16 @@ window.onload = () => {
     document.querySelector('ul.nav.navbar-nav').style.display="none";
     let editAndNewMergeRequest = document.querySelector('a.btn.btn-success');
     editAndNewMergeRequest.addEventListener("click",(e)=>{
+        console.log(window)
         e.preventDefault();
         console.log(editAndNewMergeRequest);
         let href = editAndNewMergeRequest.href;
-        let win = new BrowserWindow({
+        let newProjectWindow = new BrowserWindow({
             webPreferences:{
                 preload:path.join(__dirname,'newMergeRequestPreload.js')
             }
         });
-        win.loadURL(href);
+        newProjectWindow.loadURL(href);
     })
 
     for(let project of projects)
@@ -32,8 +33,10 @@ window.onload = () => {
             let href =project.querySelector('a').href;
             console.log(href);
             let win = new BrowserWindow({
-                width:1000,
-                height:800,
+                width:800,
+                height:700,
+                resizable: false,
+                // parent:window.parent,
                 webPreferences:{
                     preload:path.join(__dirname, 'projectPreload.js')
                 }
