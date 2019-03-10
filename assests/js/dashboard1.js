@@ -1,4 +1,5 @@
 const path = require('path');
+const { remote } = require('electron')
 let insideEle1;
 let insideEle2;
 // DOM elements
@@ -6,7 +7,6 @@ const webview1 = document.querySelector('#webview-1')
 const webview2 = document.querySelector('#webview-2')
 const gmailButton = document.querySelector('#gmail-button');
 const chatButton = document.querySelector('#chat-button');
-const googleButton = document.querySelector('#google-button');
 const gitlabButton = document.querySelector('#gitlab-button');
 const loading = document.querySelector('#loading');
 const logoutButton = document.querySelector('#logout');

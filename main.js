@@ -9,6 +9,8 @@ function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
     show: false,
+    minHeight:550,
+    minWidth:1100,
     webPreferences: {
       webviewTag: true,
       nativeWindowOpen: true,
