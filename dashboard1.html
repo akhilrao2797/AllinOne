@@ -9,13 +9,6 @@
     <link rel="stylesheet" href="./assests/css/fontawesome/all.css">
     <link rel="stylesheet" href="./assests/css/dashboard1.css">
     <title>All In One</title>
-    <style>
-        #webview-1,
-        #webview-2 {
-            height: 99vh;
-            border: 1px solid #aaaaaa;
-        }
-    </style>
 </head>
 
 <body>
@@ -43,12 +36,12 @@
                         ondragstart="drag(event)">
                 </div>
                 <div id="logout">
-                    <i class="fas fa-sign-out-alt fa-3x"></i>
+                    <i class="fas fa-sign-out-alt fa-3x" style="color:#EF462A"></i>
                 </div>
             </nav>
         </header>
         <main>
-            <section class="container-fluid row" id="wrapper">
+            <section class="row" id="wrapper">
                 <article id="webview-1" class="col-sm-8" ondrop="drop(event)" ondragover="allowDrop(event)"
                     ondragenter="dragEnter1(event)" ondragleave="dragExit1(event)">
                     <h6 class="text-center text-secondary"><i>Drag and Drop an app to open</i></h6>
