@@ -24,6 +24,14 @@ function webviewCreator(url, id, preload) {
     ele.style = "top:0; display:inline-flex !important; width: 100%; height: 99.5%;";
     ele.setAttribute('preload', preload);
     ele.setAttribute('allowpopups', '')
+    ele.addEventListener('did-finish-load', () => {
+        loading.style.display='none'
+        ele.style.display = "inline-flex"
+    })
+    ele.addEventListener('dom-ready', () => {
+        ele.openDevTools()
+    })
+    
     return ele
 }
 
@@ -52,6 +60,7 @@ function drag(ev) {
 
 function drop(ev) {
     ev.preventDefault();
+    loading.style.display='block'
     var data = ev.dataTransfer.getData("text/plain");
     if (document.getElementById(data).id === 'gmail-button') {
         ev.target.innerHTML = ''
@@ -66,6 +75,9 @@ function drop(ev) {
         ev.target.appendChild(gitView)
     }
 }
+
+
+
 gmailButton.addEventListener('click', () => {
     webview1.innerHTML = ''
     webview1.appendChild(gmailView)
