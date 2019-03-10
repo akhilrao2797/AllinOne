@@ -14,7 +14,6 @@ function createWindow() {
       nativeWindowOpen: true,
     }
   })
-
   loginChild = new BrowserWindow(
     {
       parent: win, width: 575, height: 530, frame: false, resizable: false, webPreferences: {
@@ -28,7 +27,7 @@ function createWindow() {
   loginChild.on('page-title-updated', () => {
     if (loginChild.webContents.getURL().includes('https://myaccount.google.com')) {
       loginChild.hide();
-      win.loadFile('dashboard.html');
+      win.loadFile('dashboard1.html');
       win.maximize();
       win.show();
     }

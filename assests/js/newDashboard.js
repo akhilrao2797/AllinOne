@@ -11,9 +11,11 @@ const webviewContainer = document.querySelector('#webview-container');
 const webviewElement = document.querySelector('.webview');
 const loading = document.querySelector('#loading');
 const logoutButton = document.querySelector('#logout');
+const replButton = document.querySelector('#replButton');
 
 let chatWindow;
 let gitlabWindow;
+let replWindow;
 
 const intialWebViewLoad = () => {
     loading.style.display = 'block'
@@ -44,11 +46,7 @@ chatButton.addEventListener('click', (e) => {
         chatWindow = new BrowserWindow({ resizable: false, maximizable: false, webPreferences: { preload: path.join(__dirname, 'preloads', 'googleChat', 'googleChat.js'), nodeIntegration: false } });
         chatWindow.loadURL('https://chat.google.com/u/0/');
     }
-    if (chatWindow.isFocused()) {
-        console.log("IS FOCUSED")
-    }
-    else {
-        console.log("MAKING FOCUS")
+    if (!chatWindow.isFocused()) {
         chatWindow.focus();
     }
     chatWindow.on('closed', () => {
@@ -80,4 +78,16 @@ logoutButton.addEventListener('click', () => {
                     remote.getCurrentWindow().hide();
                 })
         })
+})
+replButton.addEventListener('click', () => {
+    if (replWindow == null) {
+        replWindow = new BrowserWindow({ resizable: false, maximizable: false, webPreferences: { nodeIntegration: false } });
+        replWindow.loadURL('https://repl.it/');
+    }
+    if (!replWindow.isFocused()) {
+        replWindow.focus();
+    }
+    replWindow.on('closed', () => {
+        replWindow = null;
+    })
 })
