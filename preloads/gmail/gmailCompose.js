@@ -8,8 +8,8 @@ const composeWindowFunction = () => {
     document.querySelector('[aria-label="Hangouts"]').style.display = 'none';
     document.querySelector('div.aeQ').style.display = 'none';
     document.querySelector('span.J-Ke.n4.ah9').style.display = 'none';
-    document.querySelector('div.gb_w.gb_Tc.gb_f.gb_xf').style.display = 'none'; // google apps done
-    // document.querySelector('div.gb_uc.gb_Tc.gb_f.gb_vc.gb_xf').style.display = 'none' //notfication disable
+    document.querySelector('div.nH.bAw.nn').style.display = 'none'
+    document.querySelector('div.gb_lc.gb_Ja.gb_kc').style.display='none'
     document.querySelector('button.all-in-one-btn').addEventListener('click', () => {
         composeWindow = new BrowserWindow({
             parent: remote.getCurrentWindow(),

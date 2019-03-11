@@ -5,7 +5,7 @@ const menu = new Menu()
 let win
 let loginChild
 let tray = null
-const iconPath = path.join(__dirname,'Logo.png')
+const iconPath = path.join(__dirname,'assests','images','Group123x.png')
 
 // const store = new Store({
 //   // We'll call our data file 'user-preferences'
@@ -16,10 +16,9 @@ const iconPath = path.join(__dirname,'Logo.png')
 // });
 
 function createTray(){
-  console.log("create tray function accessed")
   tray = new Tray(iconPath)
   tray.setHighlightMode('always')
-  //console.log(iconPath)
+  console.log(iconPath)
 
   let template = [
     {

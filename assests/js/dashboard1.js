@@ -16,8 +16,8 @@ const slackButton = document.querySelector('#slack-button');
 let gmailView = webviewCreator('https://mail.google.com/mail/u/0/', 'gmailWebView', path.join(__dirname, 'preloads', 'gmail', 'gmailCompose'));
 let gitView = webviewCreator('https://git.hashedin.com', 'gitlabWebView', path.join(__dirname, 'preloads', 'gitlab', 'allProjectsPreload'));
 let chatView = webviewCreator('https://chat.google.com/u/0/', 'chatWebView', path.join(__dirname, 'preloads', 'googleChat', 'googleChat.js'));
-let replView = webviewCreator('https://repl.it/login','replWebView',path.join(__dirname,'preloads','repl','repl.js'))
-let slackView = webviewCreator('https://slack.com/signin','replWebView',path.join(__dirname,'preloads','slack','slackpreload.js'))
+let replView = webviewCreator('https://repl.it/login', 'replWebView', path.join(__dirname, 'preloads', 'repl', 'repl.js'))
+let slackView = webviewCreator('https://slack.com/signin', 'replWebView', path.join(__dirname, 'preloads', 'slack', 'slackpreload.js'))
 
 function webviewCreator(url, id, preload) {
     ele = document.createElement('webview');
@@ -27,13 +27,13 @@ function webviewCreator(url, id, preload) {
     ele.setAttribute('preload', preload);
     ele.setAttribute('allowpopups', '')
     ele.addEventListener('did-finish-load', () => {
-        loading.style.display='none'
+        loading.style.display = 'none'
         ele.style.display = "inline-flex"
     })
     ele.addEventListener('dom-ready', () => {
         ele.openDevTools()
     })
-    
+
     return ele
 }
 
@@ -62,7 +62,7 @@ function drag(ev) {
 
 function drop(ev) {
     ev.preventDefault();
-    loading.style.display='block'
+    loading.style.display = 'block'
     var data = ev.dataTransfer.getData("text/plain");
     if (document.getElementById(data).id === 'gmail-button') {
         ev.target.innerHTML = ''
@@ -101,15 +101,19 @@ logoutButton.addEventListener('click', () => {
         .then(() => {
             fetch('https://git.hashedin.com/users/sign_out')
                 .then(() => {
-                    remote.getCurrentWindow().hide();
+                    fetch('https://repl.it/logout')
+                        .then((err) => {
+                            console.log(err)
+                            remote.getCurrentWindow().hide();
+                        })
                 })
         })
 })
-slackButton.addEventListener('click',()=>{
+slackButton.addEventListener('click', () => {
     webview2.innerHTML = ''
     webview2.appendChild(slackView)
 })
-replButton.addEventListener('click',()=>{
+replButton.addEventListener('click', () => {
     webview1.innerHTML = ''
     webview1.appendChild(replView)
 })
