@@ -80,20 +80,35 @@ window.onload = () => {
 function popUpCompose(selectedText) {
     regex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi
     var found;
-    var indexArray = [];
+    var indexArray=[];
+    var bodyText,strindex;
     var emailsArray = selectedText.match(regex);
-    var strindex = indexArray[emailsArray.length - 1] + emailsArray[emailsArray.length - 1].length
+    if (emailsArray!=null){
 
-    if (emailsArray != null && emailsArray.length && strindex !== selectedText.length) {
-        while ((found = regex.exec(selectedText)) !== null) {
+        if(emailsArray!=null && emailsArray.length){
+            while((found=regex.exec(selectedText)) !==null){
             indexArray.push(found.index)
+            }
+                strindex=indexArray[emailsArray.length-1]+emailsArray[emailsArray.length-1].length
+                // emails are in front and body comes after
+                if(strindex != selectedText.length){
+                    bodyText = selectedText.slice(strindex)
+                }
+                // body comes front so put everything in bodytext
+                else{
+                    bodyText = selectedText
+                }
+                
+            }
         }
-        var bodyText = selectedText.slice(strindex)
-    }
-    else {
-        bodyText = selectedText;
-        emailsArray = ""
-    }
+    
+        else 
+        {
+            console.log('in else')
+            // put the selected text in the body
+            bodyText = selectedText;
+            emailsArray="";
+        }
 
     let gmailComposeWin = new BrowserWindow({
         width: 500,
