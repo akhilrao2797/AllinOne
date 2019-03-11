@@ -1,6 +1,16 @@
 const { app, BrowserWindow, Menu, MenuItem, Tray , ipcMain} = require('electron');
 const path = require('path');
 const menu = new Menu()
+const Store = require('./store.js');
+
+const store = new Store({
+  // We'll call our data file 'user-preferences'
+  configName: 'user-preferences',
+  defaults: {
+    // 800x600 is the default size of our window
+    windowBounds: { width: 550, height: 1100 }
+  }
+});
 
 let win
 let loginChild
@@ -27,8 +37,7 @@ function createTray(){
         let windowGmail = new BrowserWindow(
           {
               alwaysOnTop: true,
-              width:  800,
-              height: 600,
+              width: 500, height: 600,
               webPreferences:{
                 preload: path.join(__dirname,'preloads','gmail','gmailCompose.js')
               } 
@@ -47,8 +56,7 @@ function createTray(){
         let windowChat = new BrowserWindow(
           {
               //alwaysOnTop: true,
-              width:  800,
-              height: 600,
+              width: 450, height: 650,
               webPreferences:{
                 preload: path.join(__dirname,'preloads','googleChat','googleChat.js')
               } 
@@ -116,10 +124,13 @@ function createTray(){
   tray.setToolTip('Tray App')
 }
 function createWindow() {
+  let { width, height } = store.get('windowBounds');
   createTray();
   // Create the browser window.
   win = new BrowserWindow({
     show: false,
+    width,
+    height,
     minHeight:550,
     minWidth:1100,
     webPreferences: {
@@ -127,6 +138,11 @@ function createWindow() {
       nativeWindowOpen: true,
     }
   })
+  win.on('resize', () => {
+    let { width, height } = win.getBounds();
+    store.set('windowBounds', { width, height });
+  });
+
   loginChild = new BrowserWindow(
     {
       parent: win, width: 575, height: 530, frame: false, resizable: false, webPreferences: {
@@ -141,7 +157,7 @@ function createWindow() {
     if (loginChild.webContents.getURL().includes('https://myaccount.google.com')) {
       loginChild.hide();
       win.loadFile('dashboard1.html');
-      win.maximize();
+      // win.maximize();
       win.show();
     }
   })
