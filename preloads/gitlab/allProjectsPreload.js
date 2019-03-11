@@ -1,17 +1,12 @@
 const electron = require('electron');
 const BrowserWindow= electron.remote.BrowserWindow;
 const path = require("path");
-<<<<<<< HEAD
-const ipcMain = electron.ipcMain;
-const ipcRenderer = electron.ipcRenderer;
 const {remote} = electron
 const {Menu, MenuItem} = remote
 const gitlabmenu = new Menu()
 
 let selectedText
 
-=======
->>>>>>> akhil.rao/all_in_one-gitlabChanges
 
 window.onload = () => {
     if(document.querySelector('a#oauth-login-google_oauth2') !== null){
@@ -57,18 +52,9 @@ window.onload = () => {
     }
     
     // creating context menus
-    gitlabmenu.append(new MenuItem({ label: 'menu for gitlab window', click() { console.log('new tab will open in near future') } }))
     gitlabmenu.append(new MenuItem({ type: 'separator' }))
-    gitlabmenu.append(new MenuItem({ label: 'item clicked', type: 'checkbox', checked: true }))
     gitlabmenu.append(new MenuItem({role:'copy'}))
     gitlabmenu.append(new MenuItem({role:'paste'}))
-    gitlabmenu.append(new MenuItem({
-        label: 'open compose box in gmail',
-        click() {
-            selectedText = document.getSelection().toString();
-            popUpCompose(selectedText)
-        }
-    }));
 
     document.addEventListener('contextmenu', (e) => {
         e.preventDefault()

@@ -162,7 +162,7 @@ function createWindow() {
    })
    console.log(__dirname,'js','gmailBackground.js');
   gmailBackgroundWindow.loadURL('https://mail.google.com/')
- // gmailBackgroundWindow.hide()
+  
 
   win.on('hide', () => {
     loginChild.loadURL('https://accounts.google.com/signin');
@@ -229,7 +229,6 @@ ipcMain.on('show-context-menu',(event, newMenu)=>{
    
 ipcMain.on('sendUrlToSlack',function(event,arg){
   mergeRequestTextForSlack = arg;
-  console.log(mergeRequestTextForSlack)
 })
 ipcMain.on('textFromMergeRequestToSlack',function(event){
   event.returnValue = mergeRequestTextForSlack;
@@ -245,7 +244,6 @@ ipcMain.on('inboxUnreadSend',function(event){
 })
 ipcMain.on('inboxUnreadReceive',function(event,arg){
   previousInbox = arg;
-  console.log(previousInbox)
 })
 let openGmail;
 ipcMain.on('OpenGmail',function(event,arg){
