@@ -6,7 +6,5 @@ window.onload = () => {
    
     }
     window.setTimeout(runcode,5000)
-    window.webContents.on('did-navigate',()=>{
-        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    })
+    
    }
