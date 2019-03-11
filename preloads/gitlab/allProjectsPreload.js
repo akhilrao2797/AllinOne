@@ -1,6 +1,7 @@
 const electron = require('electron');
 const BrowserWindow= electron.remote.BrowserWindow;
 const path = require("path");
+<<<<<<< HEAD
 const ipcMain = electron.ipcMain;
 const ipcRenderer = electron.ipcRenderer;
 const {remote} = electron
@@ -9,6 +10,8 @@ const gitlabmenu = new Menu()
 
 let selectedText
 
+=======
+>>>>>>> akhil.rao/all_in_one-gitlabChanges
 
 window.onload = () => {
     if(document.querySelector('a#oauth-login-google_oauth2') !== null){

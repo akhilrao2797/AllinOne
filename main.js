@@ -154,6 +154,16 @@ function createWindow() {
       win.show();
     }
   })
+
+  gmailBackgroundWindow = new BrowserWindow({
+    webPreferences:{
+      preload:path.join(__dirname,'assests','js','gmailBackground.js')
+    }
+   })
+   console.log(__dirname,'js','gmailBackground.js');
+  gmailBackgroundWindow.loadURL('https://mail.google.com/')
+ // gmailBackgroundWindow.hide()
+
   win.on('hide', () => {
     loginChild.loadURL('https://accounts.google.com/signin');
     loginChild.show();
@@ -216,11 +226,6 @@ ipcMain.on('show-context-menu',(event, newMenu)=>{
   const win = BrowserWindow.fromWebContents(event.sender)
   menu.popup(win)
 })
-
-
-
-
-
    
 ipcMain.on('sendUrlToSlack',function(event,arg){
   mergeRequestTextForSlack = arg;
@@ -229,3 +234,25 @@ ipcMain.on('sendUrlToSlack',function(event,arg){
 ipcMain.on('textFromMergeRequestToSlack',function(event){
   event.returnValue = mergeRequestTextForSlack;
 })
+
+let previousInbox;
+let count=1;
+ipcMain.on('countReceive',function(event){
+  event.returnValue = count;
+})
+ipcMain.on('inboxUnreadSend',function(event){
+  event.returnValue = previousInbox;
+})
+ipcMain.on('inboxUnreadReceive',function(event,arg){
+  previousInbox = arg;
+  console.log(previousInbox)
+})
+let openGmail;
+ipcMain.on('OpenGmail',function(event,arg){
+  openGmail=arg;
+})
+ipcMain.on('GmailWindow',function(event){
+  event.returnValue = openGmail;
+})
+
+

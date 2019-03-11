@@ -91,6 +91,12 @@ function drop(ev) {
     }
 }
 
+let gmailWindowValue = ipcRenderer.sendSync("GmailWindow")
+if(gmailWindowValue===1){
+    webview1.innerHTML = ''
+    webview1.appendChild(gmailView)
+}
+
 gmailButton.addEventListener('click', () => {
     webview1.innerHTML = ''
     webview1.appendChild(gmailView)
