@@ -31,7 +31,7 @@ function createWindow() {
         preload: path.join(__dirname, 'preloads', 'login.js'),
       }
     })
-  loginChild.loadURL('https://accounts.google.com/signin')
+  gmailBackgroundWindow.loadURL('https://accounts.google.com/signin')
 
   loginChild.on('page-title-updated', () => {
     if (loginChild.webContents.getURL().includes('https://myaccount.google.com')) {
