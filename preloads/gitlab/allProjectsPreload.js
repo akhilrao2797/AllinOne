@@ -20,17 +20,16 @@ window.onload = () => {
     document.querySelector('ul.nav.navbar-nav').style.display="none";
     if(document.querySelector('a.btn.btn-success'))
     {
-        let editAndNewMergeRequest = document.querySelector('a.btn.btn-success');
-        editAndNewMergeRequest.addEventListener("click",(e)=>{
+        let newProjectBtn = document.querySelector('a.btn.btn-success');
+        newProjectBtn.addEventListener("click",(e)=>{
             e.preventDefault();
-            console.log(editAndNewMergeRequest);
-            let href = editAndNewMergeRequest.href;
-            let win = new BrowserWindow({
+            let href = newProjectBtn.href;
+            let newProjectWindow = new BrowserWindow({ 
                 webPreferences:{
                     preload:path.join(__dirname,'newMergeRequestPreload.js')
                 }
             });
-            win.loadURL(href);
+            newProjectWindow.loadURL(href);
         })
     }
 
@@ -40,14 +39,17 @@ window.onload = () => {
             e.preventDefault();
             let href =project.querySelector('a').href;
             console.log(href);
-            let win = new BrowserWindow({
-                width:1000,
-                height:800,
+            let projectWindow = new BrowserWindow({
+                width:800,
+                resizable: false,
                 webPreferences:{
                     preload:path.join(__dirname, 'projectPreload.js')
                 }
             });
-            win.loadURL(href);
+            projectWindow.loadURL(href);
+            projectWindow.on("close",()=>{
+                ProjectWindow=null;
+            })
         })
     }
     
