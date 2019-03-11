@@ -134,7 +134,3 @@ ipcRenderer.on('stackoverflow-open',(event,args)=>{
     webview2.innerHTML=''
     webview2.appendChild(stackoverflowView)
 })
-
-// replView.addEventListener('dom-ready',()=>{
-//     replView.openDevTools();
-// })
