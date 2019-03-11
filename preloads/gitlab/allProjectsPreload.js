@@ -1,8 +1,6 @@
 const electron = require('electron');
 const BrowserWindow= electron.remote.BrowserWindow;
 const path = require("path");
-const ipcMain = electron.ipcMain;
-const ipcRenderer = electron.ipcRenderer;
 
 window.onload = () => {
     if(document.querySelector('a#oauth-login-google_oauth2') !== null){
@@ -14,18 +12,16 @@ window.onload = () => {
     document.querySelector('ul.nav.navbar-nav').style.display="none";
     if(document.querySelector('a.btn.btn-success'))
     {
-        let editAndNewMergeRequest = document.querySelector('a.btn.btn-success');
-        editAndNewMergeRequest.addEventListener("click",(e)=>{
+        let newProjectBtn = document.querySelector('a.btn.btn-success');
+        newProjectBtn.addEventListener("click",(e)=>{
             e.preventDefault();
-            console.log(editAndNewMergeRequest);
-            let href = editAndNewMergeRequest.href;
-            let gmailWindow = new BrowserWindow({
+            let href = newProjectBtn.href;
+            let newProjectWindow = new BrowserWindow({ 
                 webPreferences:{
                     preload:path.join(__dirname,'newMergeRequestPreload.js')
                 }
             });
-            gmailWindow.setParentWindow(gmailWindow.getParentWindow())
-            gmailWindow.loadURL(href);
+            newProjectWindow.loadURL(href);
         })
     }
 
@@ -42,7 +38,6 @@ window.onload = () => {
                     preload:path.join(__dirname, 'projectPreload.js')
                 }
             });
-            projectWindow.setParentWindow(projectWindow.getParentWindow())
             projectWindow.loadURL(href);
             projectWindow.on("close",()=>{
                 ProjectWindow=null;

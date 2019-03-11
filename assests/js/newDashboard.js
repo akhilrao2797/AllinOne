@@ -8,14 +8,17 @@ const chatButton = document.querySelector('#chat-button');
 const googleButton = document.querySelector('#google-button');
 const gitlabButton = document.querySelector('#gitlab-button');
 const replButton = document.querySelector('#repl-button');
+const slackButton = document.querySelector('#slack-button');
 const webviewContainer = document.querySelector('#webview-container');
 const webviewElement = document.querySelector('.webview');
 const loading = document.querySelector('#loading');
 const logoutButton = document.querySelector('#logout');
+const replButton = document.querySelector('#replButton');
 
 let chatWindow;
 let gitlabWindow;
 let replWindow;
+let slackWindow;
 
 const intialWebViewLoad = () => {
     loading.style.display = 'block'
@@ -53,17 +56,14 @@ chatButton.addEventListener('click', (e) => {
         });
         chatWindow.loadURL('https://chat.google.com/u/0/');
     }
-    if (chatWindow.isFocused()) {
-        console.log("IS FOCUSED")
-    }
-    else {
-        console.log("MAKING FOCUS")
+    if (!chatWindow.isFocused()) {
         chatWindow.focus();
     }
     chatWindow.on('closed', () => {
         chatWindow = null;
     })
 })
+// creating child element
 gitlabButton.addEventListener('click', (e) => {
     if (gitlabWindow == null) {
         gitlabWindow = new BrowserWindow({
@@ -83,24 +83,22 @@ gitlabButton.addEventListener('click', (e) => {
         gitlabWindow = null;
     })
 })
-replButton.addEventListener('click', (e) => {
-    if (replWindow == null) {
-        replWindow = new BrowserWindow({
-            resizable: false,
-            maximizable: false,
-            webPreferences: {
-                preload: path.join(__dirname, 'preloads', 'repl', 'repl.js'),
-                nodeIntegration: false
-            }
-        });
-        replWindow.loadURL('https://repl.it/login');
-        replWindow.style.overflowX='0';
+// creating child element
+slackButton.addEventListener('click', (e) => {
+    if (slackWindow == null) {
+        slackWindow = new BrowserWindow({webPreferences:{preload:path.join(__dirname,'preloads','slack','slackpreload.js')}, nodeIntegration: false});
+        slackWindow.loadURL('https://slack.com/signin');
     }
-    if (!replWindow.isFocused()) {
-        replWindow.focus();
+    if(!slackWindow.isFocused()){
+        slackWindow.focus();
     }
-    replWindow.on('closed', () => {
-        replWindow = null;
+    slackWindow.on('closed', () => {
+        slackWindow = null;
+    })
+    slackWindow.webContents.on('dom-ready',()=> {
+        console.log("working in dashboard")
+        slackWindow.webContents.executeJavaScript(`
+        console.log('document.URL)`)
     })
 })
 
@@ -113,4 +111,16 @@ logoutButton.addEventListener('click', () => {
                     remote.getCurrentWindow().hide();
                 })
         })
+})
+replButton.addEventListener('click', () => {
+    if (replWindow == null) {
+        replWindow = new BrowserWindow({ resizable: false, maximizable: false, webPreferences: { nodeIntegration: false } });
+        replWindow.loadURL('https://repl.it/');
+    }
+    if (!replWindow.isFocused()) {
+        replWindow.focus();
+    }
+    replWindow.on('closed', () => {
+        replWindow = null;
+    })
 })

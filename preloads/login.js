@@ -1,7 +1,6 @@
 const remote = require('electron').remote;
 
 window.onload = () => {
-    console.log('WOKS');
     document.querySelector('div.google-footer-bar').style.display = 'none';
     document.querySelector('body').style.overflow='hidden';
     ele = document.createElement('a');
@@ -15,6 +14,6 @@ window.onload = () => {
     document.querySelector('div.wrapper').prepend(ele);
     ele.addEventListener('click',()=>{
         let win = remote.getCurrentWindow();
-        win.close();
+        win.hide();
     })
 }

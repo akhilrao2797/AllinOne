@@ -24,9 +24,8 @@ window.onload = () => {
         let mergeRequestTitle = document.querySelector('h2.title')
         gmailBtn.addEventListener("click",()=>{
             let gmailWindow = new BrowserWindow({
-                width: 800,
-                height: 600,
-                parent: window            
+                width: 500,
+                height: 600,    
             });
             gmailWindow.loadURL('https://mail.google.com/mail/?view=cm&fs=1&su=Please review my merge request'+
             '&body='+ mergeRequestTitle.innerText +
@@ -45,7 +44,7 @@ window.onload = () => {
         gmailShareButton.style.display="flex"
         document.querySelector('button.shareSSHButton').addEventListener("click",(e)=>{
             let gmailWindow = new BrowserWindow({ 
-                width: 800, 
+                width: 500, 
                 height: 600,
                 resizable:false
              });
@@ -54,6 +53,7 @@ window.onload = () => {
             document.querySelector('h1.project-title.qa-project-name').innerText+ ' ssh is below %0A'
             + ssh.value);
         })
+        // gmailWindow.on('closed',()=>{gmailWindow == null})
 
         var chatShareButton = document.createElement("button")
         chatShareButton.className="project-clone-holder d-none d-md-inline-flex"
@@ -65,8 +65,8 @@ window.onload = () => {
         let chatWindow;
         document.querySelector('button.chatShareSSHButton').addEventListener("click",(e)=>{
             chatWindow = new BrowserWindow({ 
-                width: 900,
-                height: 300,
+                width: 500,
+                height: 600,
                 resizable: false
              });
             chatWindow.loadURL("https://chat.google.com/add/dm");
