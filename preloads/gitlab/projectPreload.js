@@ -30,7 +30,25 @@ window.onload = () => {
             gmailWindow.loadURL('https://mail.google.com/mail/?view=cm&fs=1&su=Please review my merge request'+
             '&body='+ mergeRequestTitle.innerText +
             '%0APlease review my merge request%0A'+ document.URL);
+
         })
+        slackBtn.addEventListener('click',()=>{
+            let slackWindow = new BrowserWindow({
+                width: 800,
+                height: 800,  
+                webPreferences: {
+                    preload: "/home/vatsala_mittal/all_in_one/preloads/slack/slackMergeRequestPreload.js"
+                }  
+            });
+            slackWindow.loadURL("https://slack.com/signin")
+        
+        
+            let mergeRequestString = 'Merge Request :'+ mergeRequestTitle.innerText + ' ' + document.URL
+            ipcRenderer.send('sendUrlToSlack',mergeRequestString); 
+         
+
+        })
+        
     }
 
     let ssh = document.querySelector('input#ssh_project_clone');

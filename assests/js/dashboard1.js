@@ -34,9 +34,10 @@ function webviewCreator(url, id, preload) {
         loading.style.display='none'
         ele.style.display = "inline-flex"
     })
-    // ele.addEventListener('dom-ready', () => {
-    //     ele.openDevTools()
-    // })
+    ele.addEventListener('dom-ready', () => {
+        console.log(ele.src)
+        ele.openDevTools()
+    })
     
     return ele
 }

@@ -174,6 +174,7 @@ function createWindow() {
 app.on('ready', createWindow)
 
 let mainUrl;
+let mergeRequestTextForSlack;
 ipcMain.on('urlSend',function(event,arg){
   mainUrl=arg;
 })
@@ -214,3 +215,10 @@ ipcMain.on('show-context-menu',(event, newMenu)=>{
 
 
    
+ipcMain.on('sendUrlToSlack',function(event,arg){
+  mergeRequestTextForSlack = arg;
+  console.log(mergeRequestTextForSlack)
+})
+ipcMain.on('textFromMergeRequestToSlack',function(event){
+  event.returnValue = mergeRequestTextForSlack;
+})
