@@ -58,10 +58,53 @@ function createTray(){
       windowChat.loadURL('https://chat.google.com/u/0/')
       windowChat.show();
 
-      windowChat.on('close', function () { windowGmail = null })
+      windowChat.on('close', function () { windowChat = null })
 
       }
-    }, {
+    }, 
+    
+    {
+      label: 'Open GitLab',
+      click: function(){
+        let gitlabChat = new BrowserWindow(
+          {
+              //alwaysOnTop: true,
+              width:  800,
+              height: 600,
+              webPreferences:{
+                preload: path.join(__dirname,'preloads','gitlab','allProjectsPreload.js')
+              } 
+          }
+      )
+      gitlabChat.loadURL('https://git.hashedin.com')
+      gitlabChat.show();
+
+      gitlabChat.on('close', function () { gitlabChat = null })
+
+      }
+    },
+    {
+      label: 'Open slack',
+      click: function(){
+        let slackWindow = new BrowserWindow(
+          {
+              //alwaysOnTop: true,
+              width:  800,
+              height: 600,
+              webPreferences:{
+                preload: path.join(__dirname,'preloads','slack','slackpreload.js')
+              } 
+          }
+      )
+      slackWindow.loadURL('https://slack.com/signin')
+      slackWindow.show();
+
+      slackWindow.on('close', function () { slackWindow = null })
+
+      }
+    },
+
+    {
       label: 'Exit App',
       click:function(){
         app.exit();

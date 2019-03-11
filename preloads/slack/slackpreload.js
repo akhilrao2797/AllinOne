@@ -1,13 +1,12 @@
 const electron = require('electron')
-const BrowserWindow = electron.remote.BrowserWindow;
 const path = require('path');
-const {ipcRenderer} = require('electron');
-
 window.onload = () => {
-    console.log("Preload Working");
-    if(document.querySelector('div.align_center')){
-        document.querySelector('div.align_center').remove()
-        document.querySelector('footer').remove()
+    function runcode(){
+    document.querySelectorAll('div.ql-editor')[1].innerText='ssup people'
+   
     }
- 
-}
+    window.setTimeout(runcode,5000)
+    window.webContents.on('did-navigate',()=>{
+        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    })
+   }

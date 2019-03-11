@@ -8,7 +8,6 @@ const chatButton = document.querySelector('#chat-button');
 const googleButton = document.querySelector('#google-button');
 const gitlabButton = document.querySelector('#gitlab-button');
 const slackButton = document.querySelector('#slack-button');
-
 const webviewContainer = document.querySelector('#webview-container');
 const webviewElement = document.querySelector('.webview');
 const loading = document.querySelector('#loading');
@@ -16,6 +15,7 @@ const logoutButton = document.querySelector('#logout');
 
 let chatWindow;
 let gitlabWindow;
+let slackWindow;
 
 const intialWebViewLoad = () => {
     loading.style.display = 'block'
@@ -84,10 +84,16 @@ slackButton.addEventListener('click', (e) => {
     if(!slackWindow.isFocused()){
         slackWindow.focus();
     }
-    slackbWindow.on('closed', () => {
+    slackWindow.on('closed', () => {
         slackWindow = null;
     })
+    slackWindow.webContents.on('dom-ready',()=> {
+        console.log("working in dashboard")
+        slackWindow.webContents.executeJavaScript(`
+        console.log('document.URL)`)
+    })
 })
+
 logoutButton.addEventListener('click', () => {
     remote.getCurrentWindow().hide();
     fetch('https://www.google.com/accounts/Logout')

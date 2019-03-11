@@ -13,28 +13,29 @@ window.onload = () => {
     document.querySelector('div.nav-sidebar.sidebar-collapsed-desktop').style.display="none";
     document.querySelector('ul.list-unstyled.navbar-sub-nav').style.display="none";
     document.querySelector('ul.nav.navbar-nav').style.display="none";
+    
 
 
+   
 
+//     let mergeRequestSent=document.querySelector('input.btn.btn-success.qa-issuable-create-button');
+//     // console.log(mainUrl);
+//     mergeRequestSent.addEventListener("click",()=>{
+//         let gmailWindow = new BrowserWindow({ width: 800, height: 600 });
+//         gmailWindow.loadURL('https://mail.google.com/mail/?view=cm&fs=1&su=Please review my merge request'+
+//         '&body='+
+//         document.querySelector('textarea.note-textarea.qa-issuable-form-description.js-gfm-input.js-autosize.markdown-area').value+
+//         '%0APlease review my merge request%0A'+ mainUrl);
 
-    let mergeRequestSent=document.querySelector('input.btn.btn-success.qa-issuable-create-button');
-    // console.log(mainUrl);
-    mergeRequestSent.addEventListener("click",()=>{
-        let gmailWindow = new BrowserWindow({ width: 800, height: 600 });
-        gmailWindow.loadURL('https://mail.google.com/mail/?view=cm&fs=1&su=Please review my merge request'+
-        '&body='+
-        document.querySelector('textarea.note-textarea.qa-issuable-form-description.js-gfm-input.js-autosize.markdown-area').value+
-        '%0APlease review my merge request%0A'+ mainUrl);
-
-        let slackWindow = new BrowserWindow({
-            width:800,
-            height:600,
-            webPreferences:{
-                nodeIntegration:false,
-                preload: path.join(__dirname,'preloads','slack','slackpreload.js')
-            }
-        });
-        slackWindow.loadURL('https://slack.com/signin');
-    })
+//         let slackWindow = new BrowserWindow({
+//             width:800,
+//             height:600,
+//             webPreferences:{
+//                 nodeIntegration:false,
+//                 preload: path.join(__dirname,'preloads','slack','slackpreload.js')
+//             }
+//         });
+//         slackWindow.loadURL('https://slack.com/signin');
+//     })
     
 }

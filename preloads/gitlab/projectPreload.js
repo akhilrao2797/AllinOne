@@ -9,18 +9,19 @@ window.onload = () => {
     if(document.querySelector('a.btn.btn-success')){
     let editAndNewMergeRequestButton = document.querySelector('a.btn.btn-success');
     console.log(editAndNewMergeRequestButton);
-    
-    editAndNewMergeRequestButton.addEventListener("click",(e)=>{
-        e.preventDefault();
-        let href = editAndNewMergeRequestButton.href;
-        let mergeRequestWindow = new BrowserWindow({
-            webPreferences:{
-                preload:path.join(__dirname,'newMergeRequestPreload.js')
-            }
-        });
-        mergeRequestWindow.loadURL(href);
-        })
     }
+    
+    // editAndNewMergeRequestButton.addEventListener("click",(e)=>{
+    //     e.preventDefault();
+    //     let href = editAndNewMergeRequestButton.href;
+    //     let mergeRequestWindow = new BrowserWindow({
+    //         webPreferences:{
+    //             preload:path.join(__dirname,'newMergeRequestPreload.js')
+    //         }
+    //     });
+    //     mergeRequestWindow.loadURL(href);
+    //     })
+    //}
     let ssh = document.querySelector('input#ssh_project_clone');
     
     if(document.querySelector('div.project-repo-buttons.col-md-12.col-lg-6.d-inline-flex.flex-wrap.justify-content-lg-end')){
@@ -46,6 +47,26 @@ window.onload = () => {
         chatShareButton.style.height="40%";
         chatShareButton.className="chatShareSSHButton d-inline-flex js-notification-dropdown notification-dropdown project-action-button dropdown inline";
         
+         /// Creating images for sharing //
+    gmailBtn = document.createElement('button')
+    gmailBtn.innerHTML = 'Gmail Share';
+    slackBtn = document.createElement('button')
+    slackBtn.innerHTML = 'Slack Share';
+    googleChatBtn = document.createElement('button')
+    googleChatBtn.innerHTML = 'Chat Share';
+    //console.log(__dirname+"/assets/images/gmail.png");
+    // gmail.src = /home/vatsala_mittal/all_in_one/assests/images/chat.png
+    // slack.src = __dirname+"/assets/images/slack.png"
+    // googleChat.src = __dirname+"assets/images/googleChat.png"    
+    div = document.createElement('div');
+    div.className= 'shareOptions';
+    div.style.display = 'flex';
+    div.style.flexDirection = 'row-reverse';
+    div.appendChild(gmailBtn)
+    div.appendChild(slackBtn)
+    div.appendChild(googleChatBtn)
+    document.querySelector('div.detail-page-description').appendChild(div);
+
         let chatWindow;
         document.querySelector('button.chatShareSSHButton').addEventListener("click",(e)=>{
             chatWindow = new BrowserWindow({ width: 800, height: 600 });
