@@ -24,14 +24,7 @@ function createWindow() {
       }
     })
   loginChild.loadURL('https://accounts.google.com/signin')
-  gmailBackgroundWindow = new BrowserWindow(
-    {
-      parent: win, width: 0, height: 0, frame: false, resizable: false, webPreferences: {
-        nodeIntegration: false,
-        preload: path.join(__dirname, 'preloads', 'login.js'),
-      }
-    })
-  gmailBackgroundWindow.loadURL('https://accounts.google.com/signin')
+ 
 
   loginChild.on('page-title-updated', () => {
     if (loginChild.webContents.getURL().includes('https://myaccount.google.com')) {
