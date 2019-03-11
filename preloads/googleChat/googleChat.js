@@ -1,8 +1,12 @@
-const electron = require('electron');
-const { remote } = electron
-const { Menu, MenuItem } = remote
-const menu = new Menu()
+const electron = require('electron')
+// const { globalShortcut } = require('electron')
+const {remote} = electron
+const {Menu, MenuItem} = remote
+const googleChatmenu = new Menu()
 const path = require('path')
+const {ipcRenderer} = require('electron')
+// const ipc = electron.ipcRenderer
+// const remote = electron.remote
 const MainWindow = electron.remote
 const BrowserWindow = electron.remote.BrowserWindow
 let win
@@ -57,15 +61,14 @@ window.onload = () => {
     console.log("JJ")
 
     // creating context menus
-    menu.append(new MenuItem({ label: 'open new tab in google chat', click() { console.log('new tab will open in near future') } }))
-    menu.append(new MenuItem({ type: 'separator' }))
-    menu.append(new MenuItem({ label: 'item clicked', type: 'checkbox', checked: true }))
-    menu.append(new MenuItem({ role: 'copy' }))
-    menu.append(new MenuItem({ role: 'paste' }))
-    menu.append(new MenuItem({
+    googleChatmenu.append(new MenuItem({ label: 'open new tab in google chat', click() { console.log('new tab will open in near future') } }))
+    googleChatmenu.append(new MenuItem({ type: 'separator' }))
+    googleChatmenu.append(new MenuItem({ label: 'item clicked', type: 'checkbox', checked: true }))
+    googleChatmenu.append(new MenuItem({role:'copy'}))
+    googleChatmenu.append(new MenuItem({role:'paste'}))
+    googleChatmenu.append(new MenuItem({
         label: 'open compose box in gmail',
         click() {
-            console.log("opening the composebox in near future");
             selectedText = document.getSelection().toString();
             popUpCompose(selectedText)
         }
@@ -73,8 +76,11 @@ window.onload = () => {
 
     document.addEventListener('contextmenu', (e) => {
         e.preventDefault()
-        menu.popup()
-    }, false)
+        googleChatmenu.popup()
+        // ipcRenderer.send('show-context-menu',document)
+    })
+
+    
 }
 
 function popUpCompose(selectedText) {
