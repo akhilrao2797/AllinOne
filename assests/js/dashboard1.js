@@ -35,9 +35,10 @@ function webviewCreator(url, id, preload) {
         ele.style.display = "inline-flex"
     })
     ele.addEventListener('dom-ready', () => {
+        console.log(ele.src)
         ele.openDevTools()
     })
-
+    
     return ele
 }
 

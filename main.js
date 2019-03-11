@@ -18,14 +18,6 @@ let loginChild,selectedText
 let tray = null
 const iconPath = path.join(__dirname,'assests','images','Group123x.png')
 
-// const store = new Store({
-//   // We'll call our data file 'user-preferences'
-//   configName: 'user-preferences',
-//   defaults: {
-//     windowBounds: { width: 1366, height: 713 }
-//   }
-// });
-
 function createTray(){
   tray = new Tray(iconPath)
   tray.setHighlightMode('always')
@@ -189,6 +181,7 @@ function createWindow() {
 app.on('ready', createWindow)
 
 let mainUrl;
+let mergeRequestTextForSlack;
 ipcMain.on('urlSend',function(event,arg){
   mainUrl=arg;
 })
@@ -222,4 +215,17 @@ app.on('browser-window-created',(event,win)=>{
 ipcMain.on('show-context-menu',(event, newMenu)=>{
   const win = BrowserWindow.fromWebContents(event.sender)
   menu.popup(win)
+})
+
+
+
+
+
+   
+ipcMain.on('sendUrlToSlack',function(event,arg){
+  mergeRequestTextForSlack = arg;
+  console.log(mergeRequestTextForSlack)
+})
+ipcMain.on('textFromMergeRequestToSlack',function(event){
+  event.returnValue = mergeRequestTextForSlack;
 })

@@ -10,7 +10,7 @@ window.onload = () => {
     if(document.querySelector('div.detail-page-description'))
     {
         gmailBtn = document.createElement('button');
-        gmailBtn.innerHTML="<img src ='/home/akhil_rao/all_in_one/assests/images/gmail.png'";
+        gmailBtn.innerHTML="Gmail Share";
         slackBtn = document.createElement('button')
         slackBtn.innerHTML = 'Slack Share';
         div = document.createElement('div');
@@ -30,7 +30,27 @@ window.onload = () => {
             gmailWindow.loadURL('https://mail.google.com/mail/?view=cm&fs=1&su=Please review my merge request'+
             '&body='+ mergeRequestTitle.innerText +
             '%0APlease review my merge request%0A'+ document.URL);
+
         })
+        slackBtn.addEventListener('click',()=>{
+            console.log(__dirname)
+            let slackWindow = new BrowserWindow({
+                width: 800,
+                height: 800,  
+                webPreferences: {
+                    preload: path.join(__dirname,'..','slack','slackMergeRequestPreload.js')
+                    // preload: '/home/sujit_surendranath/Desktop/Electron/All_In_One/preloads/slack/slackMergeRequestPreload.js'
+                }  
+            });
+            slackWindow.loadURL("https://slack.com/signin")
+        
+        
+            let mergeRequestString = 'Merge Request :'+ mergeRequestTitle.innerText + ' ' + document.URL
+            ipcRenderer.send('sendUrlToSlack',mergeRequestString); 
+         
+
+        })
+        
     }
 
     let ssh = document.querySelector('input#ssh_project_clone');
