@@ -10,7 +10,7 @@ window.onload = () => {
     if(document.querySelector('div.detail-page-description'))
     {
         gmailBtn = document.createElement('button');
-        gmailBtn.innerHTML="<img src ='/home/akhil_rao/all_in_one/assests/images/gmail.png'";
+        gmailBtn.innerHTML="Gmail Share";
         slackBtn = document.createElement('button')
         slackBtn.innerHTML = 'Slack Share';
         div = document.createElement('div');
@@ -33,11 +33,13 @@ window.onload = () => {
 
         })
         slackBtn.addEventListener('click',()=>{
+            console.log(__dirname)
             let slackWindow = new BrowserWindow({
                 width: 800,
                 height: 800,  
                 webPreferences: {
-                    preload: "/home/vatsala_mittal/all_in_one/preloads/slack/slackMergeRequestPreload.js"
+                    preload: path.join(__dirname,'..','slack','slackMergeRequestPreload.js')
+                    // preload: '/home/sujit_surendranath/Desktop/Electron/All_In_One/preloads/slack/slackMergeRequestPreload.js'
                 }  
             });
             slackWindow.loadURL("https://slack.com/signin")

@@ -8,14 +8,6 @@ let loginChild,selectedText
 let tray = null
 const iconPath = path.join(__dirname,'Logo.png')
 
-// const store = new Store({
-//   // We'll call our data file 'user-preferences'
-//   configName: 'user-preferences',
-//   defaults: {
-//     windowBounds: { width: 1366, height: 713 }
-//   }
-// });
-
 function createTray(){
   console.log("create tray function accessed")
   tray = new Tray(iconPath)
