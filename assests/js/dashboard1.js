@@ -15,7 +15,7 @@ const replButton = document.querySelector('#repl-button');
 let gmailView = webviewCreator('https://mail.google.com/mail/u/0/', 'gmailWebView', path.join(__dirname, 'preloads', 'gmail', 'gmailCompose'));
 let gitView = webviewCreator('https://git.hashedin.com', 'gitlabWebView', path.join(__dirname, 'preloads', 'gitlab', 'allProjectsPreload'));
 let chatView = webviewCreator('https://chat.google.com/u/0/', 'chatWebView', path.join(__dirname, 'preloads', 'googleChat', 'googleChat.js'));
-let replView = webviewCreator('https://repl.it/','replWebView',path.join(__dirname,'preloads','repl','repl.js'))
+let replView = webviewCreator('https://repl.it/login','replWebView',path.join(__dirname,'preloads','repl','repl.js'))
 
 function webviewCreator(url, id, preload) {
     ele = document.createElement('webview');
@@ -104,3 +104,4 @@ replButton.addEventListener('click',()=>{
     webview1.innerHTML = ''
     webview1.appendChild(replView)
 })
+login
