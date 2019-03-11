@@ -1,8 +1,7 @@
 const electron = require('electron')
-const {remote} = electron
+const {remote, ipcRenderer} = electron
 const {Menu, MenuItem} = remote
 const BrowserWindow = electron.remote.BrowserWindow
-
 const menu = new Menu()
 
 // const menu = new Menu()
@@ -18,7 +17,9 @@ window.onload = ()=>{
         click() {
             selectedText = document.getSelection().toString();
             // selectedText="error in creating window electron"
-            popUpStackOverflow(selectedText)
+            url = "https://stackoverflow.com/search?q="+selectedText
+            ipcRenderer.send("stackoverflow",url)
+            // popUpStackOverflow(selectedText)
         }
     }));
 

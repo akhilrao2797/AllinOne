@@ -1,9 +1,8 @@
-
 const Store = require('./store.js');
 const { app, BrowserWindow, Menu, MenuItem, Tray , ipcMain} = require('electron');
 const path = require('path');
 const menu = new Menu()
-
+let stackoverflowtext
 let win
 let loginChild,selectedText
 let tray = null
@@ -152,6 +151,13 @@ function createWindow() {
     loginChild.loadURL('https://accounts.google.com/signin');
     loginChild.show();
   })
+
+  ipcMain.on('stackoverflow',(e,args)=>{
+    stackoverflowtext = args
+    console.log(" args: ",args)
+    win.webContents.send('stackoverflow-open',args)
+  })
+
   win.on('closed', () => {
     win = null;
     loginChild = null;
@@ -202,6 +208,8 @@ ipcMain.on('show-context-menu',(event, newMenu)=>{
   const win = BrowserWindow.fromWebContents(event.sender)
   menu.popup(win)
 })
+
+
 
 
 
