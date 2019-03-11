@@ -17,7 +17,7 @@ let gmailView = webviewCreator('https://mail.google.com/mail/u/0/', 'gmailWebVie
 let gitView = webviewCreator('https://git.hashedin.com', 'gitlabWebView', path.join(__dirname, 'preloads', 'gitlab', 'allProjectsPreload'));
 let chatView = webviewCreator('https://chat.google.com/u/0/', 'chatWebView', path.join(__dirname, 'preloads', 'googleChat', 'googleChat.js'));
 let replView = webviewCreator('https://repl.it/login','replWebView',path.join(__dirname,'preloads','repl','repl.js'))
-let slackView = webviewCreator('https://slack.com/signin','replWebView',path.join(__dirname,'preloads','slack','slackpreload.js'))
+let slackView = webviewCreator('https://slack.com/signin','replWebView',path.join(__dirname,'preloads','slack','slackMainPreload.js'))
 
 function webviewCreator(url, id, preload) {
     ele = document.createElement('webview');
@@ -31,6 +31,7 @@ function webviewCreator(url, id, preload) {
         ele.style.display = "inline-flex"
     })
     ele.addEventListener('dom-ready', () => {
+        console.log(ele.src)
         ele.openDevTools()
     })
     

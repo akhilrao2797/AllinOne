@@ -166,6 +166,7 @@ function createWindow() {
 app.on('ready', createWindow)
 
 let mainUrl;
+let mergeRequestTextForSlack;
 ipcMain.on('urlSend',function(event,arg){
   mainUrl=arg;
 })
@@ -178,4 +179,11 @@ ipcMain.on('sshSend',function(event,arg){
 })
 ipcMain.on('sshValue',function(event){
   event.returnValue=sshValue;
+})
+ipcMain.on('sendUrlToSlack',function(event,arg){
+  mergeRequestTextForSlack = arg;
+  console.log(mergeRequestTextForSlack)
+})
+ipcMain.on('textFromMergeRequestToSlack',function(event){
+  event.returnValue = mergeRequestTextForSlack;
 })
