@@ -11,11 +11,13 @@ const gitlabButton = document.querySelector('#gitlab-button');
 const loading = document.querySelector('#loading');
 const logoutButton = document.querySelector('#logout');
 const replButton = document.querySelector('#repl-button');
+const slackButton = document.querySelector('#slack-button');
 
 let gmailView = webviewCreator('https://mail.google.com/mail/u/0/', 'gmailWebView', path.join(__dirname, 'preloads', 'gmail', 'gmailCompose'));
 let gitView = webviewCreator('https://git.hashedin.com', 'gitlabWebView', path.join(__dirname, 'preloads', 'gitlab', 'allProjectsPreload'));
 let chatView = webviewCreator('https://chat.google.com/u/0/', 'chatWebView', path.join(__dirname, 'preloads', 'googleChat', 'googleChat.js'));
 let replView = webviewCreator('https://repl.it/login','replWebView',path.join(__dirname,'preloads','repl','repl.js'))
+let slackView = webviewCreator('https://slack.com/signin','replWebView',path.join(__dirname,'preloads','slack','slackpreload.js'))
 
 function webviewCreator(url, id, preload) {
     ele = document.createElement('webview');
@@ -74,9 +76,11 @@ function drop(ev) {
         ev.target.innerHTML = ''
         ev.target.appendChild(gitView)
     }
+    else if (document.getElementById(data).id === 'slack-button') {
+        ev.target.innerHTML = ''
+        ev.target.appendChild(slackView)
+    }
 }
-
-
 
 gmailButton.addEventListener('click', () => {
     webview1.innerHTML = ''
@@ -90,6 +94,7 @@ gitlabButton.addEventListener('click', () => {
     webview1.innerHTML = ''
     webview1.appendChild(gitView)
 })
+
 logoutButton.addEventListener('click', () => {
     remote.getCurrentWindow().hide();
     fetch('https://www.google.com/accounts/Logout')
@@ -100,8 +105,11 @@ logoutButton.addEventListener('click', () => {
                 })
         })
 })
+slackButton.addEventListener('click',()=>{
+    webview2.innerHTML = ''
+    webview2.appendChild(slackView)
+})
 replButton.addEventListener('click',()=>{
     webview1.innerHTML = ''
     webview1.appendChild(replView)
 })
-login
