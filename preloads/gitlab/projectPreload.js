@@ -9,20 +9,18 @@ window.onload = () => {
     
     if(document.querySelector('div.detail-page-description'))
     {
-        gmailBtn = document.createElement('button')
-        gmailBtn.innerHTML = 'Gmail Share';
+        gmailBtn = document.createElement('button');
+        gmailBtn.innerHTML="<img src ='/home/akhil_rao/all_in_one/assests/images/gmail.png'";
         slackBtn = document.createElement('button')
         slackBtn.innerHTML = 'Slack Share';
-        googleChatBtn = document.createElement('button')
-        googleChatBtn.innerHTML = 'Chat Share';
         div = document.createElement('div');
         div.className= 'shareOptions';
         div.style.display = 'flex';
         div.style.flexDirection = 'row-reverse';
+        document.querySelector('div.detail-page-description').appendChild(div);
         div.appendChild(gmailBtn)
         div.appendChild(slackBtn)
-        div.appendChild(googleChatBtn)
-        document.querySelector('div.detail-page-description').appendChild(div);
+        
         let mergeRequestTitle = document.querySelector('h2.title')
         gmailBtn.addEventListener("click",()=>{
             let gmailWindow = new BrowserWindow({
@@ -34,6 +32,7 @@ window.onload = () => {
             '&body='+ mergeRequestTitle.innerText +
             '%0APlease review my merge request%0A'+ document.URL);
         })
+
     }
 
     let ssh = document.querySelector('input#ssh_project_clone');

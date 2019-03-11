@@ -24,7 +24,7 @@ window.onload = () => {
                     preload:path.join(__dirname,'newMergeRequestPreload.js')
                 }
             });
-            // gmailWindow.setParentWindow(gmailWindow.getParentWindow())
+            gmailWindow.setParentWindow(gmailWindow.getParentWindow())
             gmailWindow.loadURL(href);
         })
     }
@@ -35,17 +35,16 @@ window.onload = () => {
             e.preventDefault();
             let href =project.querySelector('a').href;
             console.log(href);
-            let ProjectWindow = new BrowserWindow({
+            let projectWindow = new BrowserWindow({
                 width:800,
-                height:700,
                 resizable: false,
                 webPreferences:{
                     preload:path.join(__dirname, 'projectPreload.js')
                 }
             });
-            // ProjectWindow.setParentWindow(ProjectWindow.getParentWindow())
-            ProjectWindow.loadURL(href);
-            ProjectWindow.on("close",()=>{
+            projectWindow.setParentWindow(projectWindow.getParentWindow())
+            projectWindow.loadURL(href);
+            projectWindow.on("close",()=>{
                 ProjectWindow=null;
             })
         })

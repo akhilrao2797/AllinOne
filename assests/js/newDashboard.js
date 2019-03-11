@@ -7,6 +7,7 @@ const gmailButton = document.querySelector('#gmail-button');
 const chatButton = document.querySelector('#chat-button');
 const googleButton = document.querySelector('#google-button');
 const gitlabButton = document.querySelector('#gitlab-button');
+const replButton = document.querySelector('#repl-button');
 const webviewContainer = document.querySelector('#webview-container');
 const webviewElement = document.querySelector('.webview');
 const loading = document.querySelector('#loading');
@@ -14,6 +15,7 @@ const logoutButton = document.querySelector('#logout');
 
 let chatWindow;
 let gitlabWindow;
+let replWindow;
 
 const intialWebViewLoad = () => {
     loading.style.display = 'block'
@@ -41,7 +43,14 @@ webviewElement.setAttribute('preload', path.join(__dirname, 'preloads', 'gmail',
 // Create Child Browser window
 chatButton.addEventListener('click', (e) => {
     if (chatWindow == null) {
-        chatWindow = new BrowserWindow({ resizable: false, maximizable: false, webPreferences: { preload: path.join(__dirname, 'preloads', 'googleChat', 'googleChat.js'), nodeIntegration: false } });
+        chatWindow = new BrowserWindow({ 
+            resizable: false,
+            maximizable: false,
+            webPreferences: { 
+                preload: path.join(__dirname, 'preloads', 'googleChat', 'googleChat.js'),
+                nodeIntegration: false
+            }
+        });
         chatWindow.loadURL('https://chat.google.com/u/0/');
     }
     if (chatWindow.isFocused()) {
@@ -60,9 +69,11 @@ gitlabButton.addEventListener('click', (e) => {
         gitlabWindow = new BrowserWindow({
             resizable: false,
             maximizable: false,
-            webPreferences: { preload: path.join(__dirname, 'preloads', 'gitlab', 'allProjectsPreload.js') }, nodeIntegration: false
+            webPreferences: { 
+                preload: path.join(__dirname, 'preloads', 'gitlab', 'allProjectsPreload.js'),
+                nodeIntegration: false
+            }
         });
-        // gitlabWindow.setParentWindow(gitlabWindow.getParentWindow())
         gitlabWindow.loadURL('https://git.hashedin.com');
     }
     if (!gitlabWindow.isFocused()) {
@@ -72,6 +83,27 @@ gitlabButton.addEventListener('click', (e) => {
         gitlabWindow = null;
     })
 })
+replButton.addEventListener('click', (e) => {
+    if (replWindow == null) {
+        replWindow = new BrowserWindow({
+            resizable: false,
+            maximizable: false,
+            webPreferences: {
+                preload: path.join(__dirname, 'preloads', 'repl', 'repl.js'),
+                nodeIntegration: false
+            }
+        });
+        replWindow.loadURL('https://repl.it/login');
+        replWindow.style.overflowX='0';
+    }
+    if (!replWindow.isFocused()) {
+        replWindow.focus();
+    }
+    replWindow.on('closed', () => {
+        replWindow = null;
+    })
+})
+
 logoutButton.addEventListener('click', () => {
     remote.getCurrentWindow().hide();
     fetch('https://www.google.com/accounts/Logout')
