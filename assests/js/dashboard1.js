@@ -1,5 +1,6 @@
 const path = require('path');
-const { remote } = require('electron')
+const { remote ,ipcRenderer} = require('electron')
+let stackurl;
 let insideEle1;
 let insideEle2;
 // DOM elements
@@ -16,26 +17,33 @@ const slackButton = document.querySelector('#slack-button');
 let gmailView = webviewCreator('https://mail.google.com/mail/u/0/', 'gmailWebView', path.join(__dirname, 'preloads', 'gmail', 'gmailCompose'));
 let gitView = webviewCreator('https://git.hashedin.com', 'gitlabWebView', path.join(__dirname, 'preloads', 'gitlab', 'allProjectsPreload'));
 let chatView = webviewCreator('https://chat.google.com/u/0/', 'chatWebView', path.join(__dirname, 'preloads', 'googleChat', 'googleChat.js'));
-let replView = webviewCreator('https://repl.it/login','replWebView',path.join(__dirname,'preloads','repl','repl.js'))
 let slackView = webviewCreator('https://slack.com/signin','replWebView',path.join(__dirname,'preloads','slack','slackpreload.js'))
+let replView = webviewCreator('https://repl.it/repls','replWebView',path.join(__dirname,'preloads','repl','repl.js'))
 
 function webviewCreator(url, id, preload) {
+    console.log(url)
     ele = document.createElement('webview');
     ele.src = url;
     ele.id = id;
     ele.style = "top:0; display:inline-flex !important; width: 100%; height: 99.5%;";
-    ele.setAttribute('preload', preload);
+    if(preload!=null){
+        ele.setAttribute('preload', preload);
+    }
     ele.setAttribute('allowpopups', '')
     ele.addEventListener('did-finish-load', () => {
         loading.style.display='none'
         ele.style.display = "inline-flex"
     })
-    ele.addEventListener('dom-ready', () => {
-        ele.openDevTools()
-    })
+    // ele.addEventListener('dom-ready', () => {
+    //     ele.openDevTools()
+    // })
     
     return ele
 }
+
+replView.setAttribute('webPreferences',`{
+    nativeWindowOpen:false
+}`)
 
 // Drag and drop
 function allowDrop(ev) {
@@ -101,7 +109,11 @@ logoutButton.addEventListener('click', () => {
         .then(() => {
             fetch('https://git.hashedin.com/users/sign_out')
                 .then(() => {
-                    remote.getCurrentWindow().hide();
+                    fetch('https://repl.it/logout')
+                        .then(()=>{
+                            remote.getCurrentWindow().hide();
+                        })
+                    
                 })
         })
 })
@@ -113,3 +125,15 @@ replButton.addEventListener('click',()=>{
     webview1.innerHTML = ''
     webview1.appendChild(replView)
 })
+
+ipcRenderer.on('stackoverflow-open',(event,args)=>{
+    stackurl = args;
+    let stackoverflowView = webviewCreator(stackurl,'stackView',null)
+    console.log("in dashboard:",args)
+    webview2.innerHTML=''
+    webview2.appendChild(stackoverflowView)
+})
+
+// replView.addEventListener('dom-ready',()=>{
+//     replView.openDevTools();
+// })

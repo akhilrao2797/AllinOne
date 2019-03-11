@@ -1,9 +1,10 @@
+const Store = require('./store.js');
 const { app, BrowserWindow, Menu, MenuItem, Tray , ipcMain} = require('electron');
 const path = require('path');
 const menu = new Menu()
-
+let stackoverflowtext
 let win
-let loginChild
+let loginChild,selectedText
 let tray = null
 const iconPath = path.join(__dirname,'Logo.png')
 
@@ -150,6 +151,13 @@ function createWindow() {
     loginChild.loadURL('https://accounts.google.com/signin');
     loginChild.show();
   })
+
+  ipcMain.on('stackoverflow',(e,args)=>{
+    stackoverflowtext = args
+    console.log(" args: ",args)
+    win.webContents.send('stackoverflow-open',args)
+  })
+
   win.on('closed', () => {
     win = null;
     loginChild = null;
@@ -179,3 +187,30 @@ ipcMain.on('sshSend',function(event,arg){
 ipcMain.on('sshValue',function(event){
   event.returnValue=sshValue;
 })
+// creating context menus
+menu.append(new MenuItem({
+  label:'open in new window',
+  click(){
+    console.log("opening in a new window soon")
+  }
+}))
+
+menu.append(new MenuItem({role:'copy'}))
+menu.append(new MenuItem({role:'paste'}))
+
+app.on('browser-window-created',(event,win)=>{
+  win.webContents.on('context-menu',(e,params)=>{
+    menu.popup(win,params.x,params.y)
+  })
+})
+
+ipcMain.on('show-context-menu',(event, newMenu)=>{
+  const win = BrowserWindow.fromWebContents(event.sender)
+  menu.popup(win)
+})
+
+
+
+
+
+   
