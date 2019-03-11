@@ -1,11 +1,123 @@
-const { app, BrowserWindow, Menu, MenuItem, ipcMain } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem, Tray , ipcMain} = require('electron');
 const path = require('path');
 const menu = new Menu()
 
 let win
 let loginChild
+let tray = null
+const iconPath = path.join(__dirname,'Logo.png')
 
+// const store = new Store({
+//   // We'll call our data file 'user-preferences'
+//   configName: 'user-preferences',
+//   defaults: {
+//     windowBounds: { width: 1366, height: 713 }
+//   }
+// });
+
+function createTray(){
+  console.log("create tray function accessed")
+  tray = new Tray(iconPath)
+  tray.setHighlightMode('always')
+  //console.log(iconPath)
+
+  let template = [
+    {
+      label: 'Compose Mail',
+      click: function(){
+        let windowGmail = new BrowserWindow(
+          {
+              alwaysOnTop: true,
+              width:  800,
+              height: 600,
+              webPreferences:{
+                preload: path.join(__dirname,'preloads','gmail','gmailCompose.js')
+              } 
+          }
+      )
+      windowGmail.loadURL('https://mail.google.com/mail/u/0/?view=cm&fs=1&tsu&body&bcc&tf=1')
+      windowGmail.show();
+
+      windowGmail.on('close', function () { windowGmail = null })
+
+      }
+    },
+    {
+      label: 'Open Chat',
+      click: function(){
+        let windowChat = new BrowserWindow(
+          {
+              //alwaysOnTop: true,
+              width:  800,
+              height: 600,
+              webPreferences:{
+                preload: path.join(__dirname,'preloads','googleChat','googleChat.js')
+              } 
+          }
+      )
+      windowChat.loadURL('https://chat.google.com/u/0/')
+      windowChat.show();
+
+      windowChat.on('close', function () { windowChat = null })
+
+      }
+    }, 
+    
+    {
+      label: 'Open GitLab',
+      click: function(){
+        let gitlabChat = new BrowserWindow(
+          {
+              //alwaysOnTop: true,
+              width:  800,
+              height: 600,
+              webPreferences:{
+                preload: path.join(__dirname,'preloads','gitlab','allProjectsPreload.js')
+              } 
+          }
+      )
+      gitlabChat.loadURL('https://git.hashedin.com')
+      gitlabChat.show();
+
+      gitlabChat.on('close', function () { gitlabChat = null })
+
+      }
+    },
+    {
+      label: 'Open slack',
+      click: function(){
+        let slackWindow = new BrowserWindow(
+          {
+              //alwaysOnTop: true,
+              width:  800,
+              height: 600,
+              webPreferences:{
+                preload: path.join(__dirname,'preloads','slack','slackpreload.js')
+              } 
+          }
+      )
+      slackWindow.loadURL('https://slack.com/signin')
+      slackWindow.show();
+
+      slackWindow.on('close', function () { slackWindow = null })
+
+      }
+    },
+
+    {
+      label: 'Exit App',
+      click:function(){
+        app.exit();
+      }
+    }
+  ]
+
+  const contextMenu = Menu.buildFromTemplate(template)
+  tray.setContextMenu(contextMenu)
+  tray.setToolTip('Tray App')
+}
 function createWindow() {
+  createTray();
   // Create the browser window.
   win = new BrowserWindow({
     show: false,

@@ -7,6 +7,7 @@ const gmailButton = document.querySelector('#gmail-button');
 const chatButton = document.querySelector('#chat-button');
 const googleButton = document.querySelector('#google-button');
 const gitlabButton = document.querySelector('#gitlab-button');
+const slackButton = document.querySelector('#slack-button');
 const webviewContainer = document.querySelector('#webview-container');
 const webviewElement = document.querySelector('.webview');
 const loading = document.querySelector('#loading');
@@ -16,6 +17,7 @@ const replButton = document.querySelector('#replButton');
 let chatWindow;
 let gitlabWindow;
 let replWindow;
+let slackWindow;
 
 const intialWebViewLoad = () => {
     loading.style.display = 'block'
@@ -53,6 +55,7 @@ chatButton.addEventListener('click', (e) => {
         chatWindow = null;
     })
 })
+// creating child element
 gitlabButton.addEventListener('click', (e) => {
     if (gitlabWindow == null) {
         gitlabWindow = new BrowserWindow({
@@ -69,6 +72,26 @@ gitlabButton.addEventListener('click', (e) => {
         gitlabWindow = null;
     })
 })
+
+// creating child element
+slackButton.addEventListener('click', (e) => {
+    if (slackWindow == null) {
+        slackWindow = new BrowserWindow({webPreferences:{preload:path.join(__dirname,'preloads','slack','slackpreload.js')}, nodeIntegration: false});
+        slackWindow.loadURL('https://slack.com/signin');
+    }
+    if(!slackWindow.isFocused()){
+        slackWindow.focus();
+    }
+    slackWindow.on('closed', () => {
+        slackWindow = null;
+    })
+    slackWindow.webContents.on('dom-ready',()=> {
+        console.log("working in dashboard")
+        slackWindow.webContents.executeJavaScript(`
+        console.log('document.URL)`)
+    })
+})
+
 logoutButton.addEventListener('click', () => {
     remote.getCurrentWindow().hide();
     fetch('https://www.google.com/accounts/Logout')
