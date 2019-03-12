@@ -9,20 +9,32 @@ window.onload = () => {
     
     if(document.querySelector('div.detail-page-description'))
     {
-        gmailBtn = document.createElement('button');
-        gmailBtn.innerHTML="Gmail Share";
+        let gmailShareButton = document.createElement('button');
+        gmailShareButton.title="Share by Gmail"
+        gmailShareButton.style.marginLeft="0.2em"
+        gmailShareButton.style.background="url('http://i64.tinypic.com/1zyec7r.png')"
+        gmailShareButton.style.width = "10%"
+        gmailShareButton.style.height = "100%"
+        gmailShareButton.style.border = "0"
+        gmailShareButton.style.backgroundRepeat = "no-repeat"
         slackBtn = document.createElement('button')
-        slackBtn.innerHTML = 'Slack Share';
+        slackBtn.title="Share by Slack"
+        slackBtn.style.background="url('http://i67.tinypic.com/10sd44k.png')"
+        slackBtn.style.width = "10%"
+        slackBtn.style.height = "100%"
+        slackBtn.style.border = "0"
+        slackBtn.style.backgroundRepeat = "no-repeat"
         div = document.createElement('div');
         div.className= 'shareOptions';
         div.style.display = 'flex';
-        div.style.flexDirection = 'row-reverse';
+        div.style.flexDirection = 'row';
+        div.style.height="3em"
         document.querySelector('div.detail-page-description').appendChild(div);
-        div.appendChild(gmailBtn)
+        div.appendChild(gmailShareButton)
         div.appendChild(slackBtn)
         
         let mergeRequestTitle = document.querySelector('h2.title')
-        gmailBtn.addEventListener("click",()=>{
+        gmailShareButton.addEventListener("click",()=>{
             let gmailWindow = new BrowserWindow({
                 width: 500,
                 height: 600,    
@@ -56,8 +68,13 @@ window.onload = () => {
     let ssh = document.querySelector('input#ssh_project_clone');
     if(document.querySelector('div.project-repo-buttons.col-md-12.col-lg-6.d-inline-flex.flex-wrap.justify-content-lg-end')){
         var gmailShareButton = document.createElement("button")
-        gmailShareButton.className="project-clone-holder d-none d-md-inline-flex"
-        gmailShareButton.appendChild(document.createTextNode('Share SSH By Gmail'));
+        gmailShareButton.title="Share by Gmail"
+        gmailShareButton.style.marginLeft="0.2em"
+        gmailShareButton.style.background="url('http://i64.tinypic.com/1zyec7r.png')"
+        gmailShareButton.style.width = "5%"
+        gmailShareButton.style.height = "85%"
+        gmailShareButton.style.border = "0"
+        gmailShareButton.style.backgroundRepeat = "no-repeat"
         document.querySelector('div.project-repo-buttons.col-md-12.col-lg-6.d-inline-flex.flex-wrap.justify-content-lg-end').appendChild(gmailShareButton);
         gmailShareButton.className="shareSSHButton d-inline-flex js-notification-dropdown notification-dropdown project-action-button dropdown inline";
         gmailShareButton.style.display="flex"
@@ -72,11 +89,13 @@ window.onload = () => {
             document.querySelector('h1.project-title.qa-project-name').innerText+ ' ssh is below %0A'
             + ssh.value);
         })
-        // gmailWindow.on('closed',()=>{gmailWindow == null})
-
         var chatShareButton = document.createElement("button")
-        chatShareButton.className="project-clone-holder d-none d-md-inline-flex"
-        chatShareButton.appendChild(document.createTextNode('Share SSH By Chat'));
+        chatShareButton.title="Share by Chat"
+        chatShareButton.style.background = "url('http://i65.tinypic.com/20gms2f.png')"
+        chatShareButton.style.width = "5%"
+        chatShareButton.style.height = "85%"
+        chatShareButton.style.border = "0"
+        chatShareButton.style.backgroundRepeat = "no-repeat"
         document.querySelector('div.project-repo-buttons.col-md-12.col-lg-6.d-inline-flex.flex-wrap.justify-content-lg-end').appendChild(chatShareButton);
         chatShareButton.className="chatShareSSHButton d-inline-flex js-notification-dropdown notification-dropdown project-action-button dropdown inline";
         chatShareButton.style.display="flex"
@@ -120,5 +139,6 @@ window.onload = () => {
     }
     
     ipcRenderer.send('urlSend',document.URL);
+    if(ssh)
     ipcRenderer.send('sshSend',ssh.value);
 }

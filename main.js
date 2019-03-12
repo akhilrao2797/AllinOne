@@ -156,6 +156,7 @@ function createWindow() {
   })
 
   gmailBackgroundWindow = new BrowserWindow({
+    show:false,
     webPreferences:{
       preload:path.join(__dirname,'assests','js','gmailBackground.js')
     }

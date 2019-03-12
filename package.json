@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
-  "scripts": {
-    "start": "electron ."
-  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^4.0.7"
+    "electron": "^4.0.8",
+    "electron-packager": "^13.1.1"
+  },
+  "scripts": {
+    "start": "electron .",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assests/images/Group123x.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . all_in_one --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assests/images/Group123x.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"All In One\"",
+    "package-linux": "electron-packager . all_in_one --overwrite --asar=true --platform=linux --arch=x64 --icon=assests/images/Group123x.png --prune=true --out=release-builds"
   }
 }
