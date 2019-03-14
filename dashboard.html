@@ -15,18 +15,26 @@
     <main id="main-container">
         <header id="sidebar">
             <nav id="sidenav">
-                <div id="gmail-button"><i class="fas fa-envelope fa-3x"></i></div>
-                <div id="chat-button"><i class="fas fa-comments fa-3x"></i></div>
-                <div id="google-button"><i class="fab fa-google fa-3x"></i></div>
-                <div id="gitlab-button"><i class="fab fa-gitlab fa-3x"></i></div>
+                <div id="gmail-button"><img src="./assests/images/gmail.png" alt="" class="app-logo"></div>
+                <div id="chat-button"><img src="./assests/images/chat.png" alt="" class="app-logo"></div>
+                <div id="gitlab-button"><img src="./assests/images/gitlab.png" class="app-logo" alt=""></div>
+                <div id="slack-button"><img src="./assests/images/slack.png" class="app-logo" alt=""></div>
+                <div id="repl-button"><img src="./assests/images/repl.png" class="app-logo" alt=""></div>
+<<<<<<< HEAD
+                <div id="stackoverflow-button"><img src="./assests/images/stackoverflow.png" class="app-logo" alt=""></div>
+=======
+>>>>>>> 3f1e8a026fea405d6e6a1989f6ad9635c8982488
+                <div id="logout"><i class="fas fa-sign-out-alt fa-3x"></i></div>
             </nav>
         </header>
         <section id="webview-container" class="container-fluid">
-            <webview class="webview" style="display: inline-flex !important; width: 100%; height: 100%;"></webview>
+            <div id="loading">
+                <img src="./assests/loading_animation.gif" alt="loader" class="mx-auto d-block">
+            </div>
             <!-- Web view goes here -->
+            <webview class="webview" style="top:0; display:inline-flex !important; width: 100%; height: 99.5%;" allowpopups src="https://mail.google.com/mail/u/0/"></webview>
         </section>
     </main>
-    <script src="./assests/js/dashboard.js"></script>
+    <script src="./assests/js/newDashboard.js"></script>
 </body>
-
 </html>
